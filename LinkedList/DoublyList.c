@@ -139,3 +139,62 @@ struct Node *InsertAtPos(struct Node *head, int data, int pos)
 
     return head;
 }
+
+struct Node *DeleteAtPos(struct Node *head, int pos)
+{
+    struct Node *ptrNode = head;
+
+    if (pos == 1)
+    {
+        head = head->next;
+        if (head != NULL)
+            head->prev = NULL;
+        free(ptrNode);
+        ptrNode = NULL;
+        return head;
+    }
+
+    for (int i = 1; ptrNode != NULL && i < pos - 1; i++)
+        ptrNode = ptrNode->next;
+
+    if (ptrNode->prev != NULL)
+        ptrNode->prev->next = ptrNode->next;
+    if (ptrNode->next != NULL)
+        ptrNode->next->prev = ptrNode->prev;
+    free(ptrNode);
+    ptrNode = NULL;
+
+    return head;
+}
+
+struct Node *ReverseList(struct Node *head)
+{
+    struct Node *currentPtr = head, *nextPtr = NULL;
+
+    while (currentPtr)
+    {
+        nextPtr = currentPtr->next;
+        currentPtr->next = currentPtr->prev;
+        currentPtr->prev = nextPtr;
+        if (currentPtr->next == NULL)
+            head = currentPtr;
+        currentPtr = nextPtr;
+    }
+
+    return head;
+}
+
+struct Node *ReverseListUsingRecursion(struct Node *ptrNode)
+{
+    if (ptrNode == NULL)
+        return NULL;
+
+    struct Node *tmp = ptrNode->next;
+    ptrNode->next = ptrNode->prev;
+    ptrNode->prev = tmp;
+
+    if (ptrNode->prev == NULL)
+        return ptrNode;
+
+    return ReverseListUsingRecursion(ptrNode->next);
+}
