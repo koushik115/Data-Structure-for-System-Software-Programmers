@@ -15,6 +15,7 @@ struct bstNode *deleteNode(struct bstNode *root, int data);
 void displayBST(struct bstNode *root);
 int findMinimum(struct bstNode *root, int *minimum);
 int findMaximum(struct bstNode *root, int *maximum);
+int findHeight(struct bstNode *root);
 
 int main()
 {
@@ -41,6 +42,8 @@ int main()
     } else {
 	    printf("error: empty tree!\n");
     }
+
+    printf("Height of the tree is %d\n", findHeight(rootTreeNode));
 
     return 0;
 }
@@ -111,4 +114,38 @@ int findMaximum(struct bstNode *root, int *maximum) {
 	}
 
 	return findMaximum(root->rchildNode, maximum);
+}
+
+/*
+int findMinimum(struct bstNode *root) {
+	if(root == NULL) {
+		return -1;
+	} 
+
+	while(root->lchildNode != NULL) 
+		root = root->lchildNode;
+
+	return root->data;
+}
+
+int findMaximum(struct bstNode *root) {
+	if(root == NULL) {
+		return 0;
+	} 
+
+	while(root->rchildNode != NULL) 
+		root = root->rchildNode;
+
+	return root->data;
+}
+*/
+
+int findHeight(struct bstNode *root) {
+	if(root == NULL)
+		return -1;
+
+	int lHeight = findHeight(root->lchildNode);
+	int rHeight = findHeight(root->rchildNode);
+
+	return 1 + (lHeight > rHeight ? lHeight : rHeight);
 }
