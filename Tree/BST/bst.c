@@ -13,12 +13,14 @@ struct bstNode *insertNode(struct bstNode *root, int data);
 bool isNodePresent(struct bstNode *root, int data);
 struct bstNode *deleteNode(struct bstNode *root, int data);
 void displayBST(struct bstNode *root);
-
+int findMinimum(struct bstNode *root, int *minimum);
+int findMaximum(struct bstNode *root, int *maximum);
 
 int main()
 {
     struct bstNode *rootTreeNode = NULL;
-    
+    int minimum = -1, maximum = -1;
+
     rootTreeNode = insertNode(rootTreeNode, 15);
     rootTreeNode = insertNode(rootTreeNode, 10);
     rootTreeNode = insertNode(rootTreeNode, 20);
@@ -27,6 +29,18 @@ int main()
     rootTreeNode = insertNode(rootTreeNode, 12);
     
     displayBST(rootTreeNode);
+    printf("\n\n");
+    if(findMinimum(rootTreeNode, &minimum)) {
+	    printf("Minimum element in the tree is %d\n", minimum);
+    } else {
+	    printf("error: empty tree!\n");
+    }
+
+    if(findMaximum(rootTreeNode, &maximum)) {
+	    printf("Maximum element in the tree is %d\n", maximum);
+    } else {
+	    printf("error: empty tree!\n");
+    }
 
     return 0;
 }
@@ -55,7 +69,7 @@ bool isNodePresent(struct bstNode *root, int data) {
     if(root == NULL) {
         return false;
     } else if(root->data == data) {
-        return true;;
+        return true;
     } else if(root->data > data) {
         return isNodePresent(root->lchildNode, data);
     } else {
@@ -75,4 +89,26 @@ void displayBST(struct bstNode *root) {
     
     displayBST(root->rchildNode);
     
+}
+
+int findMinimum(struct bstNode *root, int *minimum) {
+	if(root == NULL) {
+		return 0;
+	} else if(root->lchildNode == NULL) {
+		*minimum = root->data;
+		return 1;
+	}
+
+	return findMinimum(root->lchildNode, minimum);
+}
+
+int findMaximum(struct bstNode *root, int *maximum) {
+	if(root == NULL) {
+		return 0;
+	} else if(root->rchildNode == NULL) {
+		*maximum = root->data;
+		return 1;
+	}
+
+	return findMaximum(root->rchildNode, maximum);
 }
