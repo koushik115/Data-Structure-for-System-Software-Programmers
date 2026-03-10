@@ -26,7 +26,7 @@ int dequeue(struct bstNode *node);
 int isQueueFull(void);
 int isQueueEmpty(void);
 struct bstNode *getTopQueue(void);
-void postOrderTraversal(struct bstNode *root);
+void levelOrderTraversal(struct bstNode *root);
 
 int main()
 {
@@ -43,7 +43,7 @@ int main()
     displayBST(rootTreeNode);
     printf("\n\n");
     
-    postOrderTraversal(rootTreeNode);
+    levelOrderTraversal(rootTreeNode);
     /*
     if(findMinimum(rootTreeNode, &minimum)) {
 	    printf("Minimum element in the tree is %d\n", minimum);
@@ -209,7 +209,7 @@ int dequeue(struct bstNode *node) {
     return 1;
 }
 
-void postOrderTraversal(struct bstNode *root) {
+void levelOrderTraversal(struct bstNode *root) {
     if(root == NULL) return;
     if(!enqueue(root)) {
         printf("error: in queuing the root!\nexiting...");
