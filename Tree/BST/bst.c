@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#define QUEUE_SIZE  100
+
 struct bstNode {
     int data;
     struct bstNode *lchildNode;
@@ -17,6 +19,15 @@ int findMinimum(struct bstNode *root, int *minimum);
 int findMaximum(struct bstNode *root, int *maximum);
 int findHeight(struct bstNode *root);
 
+int queueFront = -1, queueRear = -1;
+struct bstNode *queueArray[QUEUE_SIZE];
+int enqueue(struct bstNode *node);
+int dequeue(struct bstNode *node);
+int isQueueFull(void);
+int isQueueEmpty(void);
+struct bstNode *getTopQueue(void);
+void postOrderTraversal(struct bstNode *root);
+
 int main()
 {
     struct bstNode *rootTreeNode = NULL;
@@ -31,6 +42,9 @@ int main()
     
     displayBST(rootTreeNode);
     printf("\n\n");
+    
+    postOrderTraversal(rootTreeNode);
+    /*
     if(findMinimum(rootTreeNode, &minimum)) {
 	    printf("Minimum element in the tree is %d\n", minimum);
     } else {
@@ -44,6 +58,7 @@ int main()
     }
 
     printf("Height of the tree is %d\n", findHeight(rootTreeNode));
+    */
 
     return 0;
 }
@@ -149,3 +164,75 @@ int findHeight(struct bstNode *root) {
 
 	return 1 + (lHeight > rHeight ? lHeight : rHeight);
 }
+
+int isQueueFull(void) {
+    return (queueFront == ((queueRear + 1) % QUEUE_SIZE));    
+}
+
+int isQueueEmpty(void) {
+    return (queueFront == -1 && queueRear == -1);
+}
+
+struct bstNode *getTopQueue(void) {
+    if(isQueueEmpty()) {
+        return NULL;
+    } else {
+        return queueArray[queueFront];
+    }
+}
+
+int enqueue(struct bstNode *node) {
+    if(isQueueFull()) {
+        return 0;
+    } else if(isQueueEmpty()) {
+        queueFront = queueRear = 0;
+    } else {
+        queueRear = (queueRear + 1) % QUEUE_SIZE;
+    }
+    
+    queueArray[queueRear] = node;
+    
+    return 1;
+}
+
+int dequeue(struct bstNode *node) {
+    if(isQueueEmpty()) {
+        return 0;
+    } else if(queueFront == queueRear) {
+        node = queueArray[queueFront];
+        queueFront = queueRear = -1;
+    } else {
+        node = queueArray[queueFront];
+        queueFront = (queueFront + 1) % QUEUE_SIZE;
+    }
+    
+    return 1;
+}
+
+void postOrderTraversal(struct bstNode *root) {
+    if(root == NULL) return;
+    if(!enqueue(root)) {
+        printf("error: in queuing the root!\nexiting...");
+        return;
+    }
+    
+    while(!isQueueEmpty()) {
+        struct bstNode *currentNode = getTopQueue();
+        printf("%d\t", currentNode->data);
+        
+        if(currentNode->lchildNode  != NULL) {
+            enqueue(currentNode->lchildNode);
+        }
+        
+        if(currentNode->rchildNode != NULL) {
+            enqueue(currentNode->rchildNode);
+        }
+        
+        if(!dequeue(currentNode)) {
+            printf("error: in dequeuing the root!\nexiting...");
+            return;
+        }
+    }
+}
+
+
