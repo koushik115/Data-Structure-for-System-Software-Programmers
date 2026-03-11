@@ -31,6 +31,10 @@ void preOrderTraversal(struct bstNode *root);
 void inOrderTraversal(struct bstNode *root);
 void postOrderTraversal(struct bstNode *root);
 
+bool isBST_1(struct bstNode *root);
+bool isBST_2(struct bstNode *root, int *prevValue);
+bool isBST_3(struct bstNode *root, int min, int max);
+
 int main() {
   struct bstNode *rootTreeNode = NULL;
   int minimum = -1, maximum = -1;
@@ -265,4 +269,65 @@ void postOrderTraversal(struct bstNode *root) {
   postOrderTraversal(root->lchildNode);
   postOrderTraversal(root->rchildNode);
   printf("%d\t", root->data);
+}
+
+static bool isSubTreeLesser(struct bstNode *root, int value) {
+  if (root == NULL)
+    return true;
+
+  if (root->data <= value && isSubTreeLesser(root->lchildNode, value) &&
+      isSubTreeLesser(root->rchildNode, value))
+    return true;
+
+  return false;
+}
+
+static bool isSubTreeGreater(struct bstNode *root, int value) {
+  if (root == NULL)
+    return true;
+
+  if (root->data > value && isSubTreeGreater(root->lchildNode, value) &&
+      isSubTreeGreater(root->rchildNode, value))
+    return true;
+
+  return false;
+}
+
+bool isBST_1(struct bstNode *root) {
+  if (root == NULL)
+    return true;
+
+  if (isSubTreeLesser(root->lchildNode, root->data) &&
+      isSubTreeGreater(root->rchildNode, root->data) &&
+      isBST_1(root->lchildNode) && isBST_1(root->rchildNode))
+    return true;
+
+  return false;
+}
+
+bool isBST_2(struct bstNode *root, int *prevValue) {
+  if (root == NULL)
+    return true;
+
+  if (!isBST_2(root->lchildNode, prevValue))
+    return false;
+
+  if (*prevValue >= root->data)
+    return false;
+
+  *prevValue = root->data;
+
+  return isBST_2(root->rchildNode, prevValue);
+}
+
+bool isBST_3(struct bstNode *root, int min, int max) {
+  if (root == NULL)
+    return true;
+
+  if (root->data > min && root->data < max &&
+      isBST_3(root->lchildNode, min, root->data) &&
+      isBST_3(root->rchildNode, root->data, max))
+    return true;
+
+  return false;
 }
