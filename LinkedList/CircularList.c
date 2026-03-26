@@ -140,7 +140,8 @@ struct node *addatbeg(struct node *last, int data) {
 	
 	tmp = (struct node *)malloc(sizeof(struct node));
 	if(tmp == NULL) return NULL;
-
+	
+	tmp->info = data;
 	tmp->link = last->link;
 	last->link = tmp;
 
