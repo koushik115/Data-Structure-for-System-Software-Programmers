@@ -144,6 +144,7 @@ struct node *addbefore(struct node *head, int data, int item) {
 
       return head;
     }
+    p = p->link;
   }
 
   printf("error: %d not present in the list\n", item);
