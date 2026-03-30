@@ -62,7 +62,29 @@ int countOccurrences(Node* head, int key) {
     return count;
 }
 
+// ================= PROBLEM 2 =================
+// Find smallest and largest element in singly linked list
+
+void findMinMax(Node* head, int* min, int* max) {
+    // TODO: Write your logic here
+    Node *p = head;
+
+    if(p == NULL) {
+	    *min = *max = -1;
+	    return;
+    }
+
+	*min = *max = p->data;
+    while(p != NULL) {
+	    if(p->data < *min) *min = p->data;
+	    if(p->data > *max) *max = p->data;
+	    p = p->next;
+    }
+
+}
+
 int main() {
+/*
     Node* head = NULL;
 
     // List: 1 -> 2 -> 3 -> 2 -> 4 -> 2 -> 5
@@ -106,6 +128,49 @@ int main() {
     count = countOccurrences(single, 2);
     printf("Single node no match = %d\n", count);
     // Expected: 0
+*/
+
+    Node* head = NULL;
+
+    // List: 7 -> 2 -> 9 -> 1 -> 5
+    head = insertEnd(head, 7);
+    head = insertEnd(head, 2);
+    head = insertEnd(head, 9);
+    head = insertEnd(head, 1);
+    head = insertEnd(head, 5);
+
+    printf("List:\n");
+    printList(head);
+
+    int min, max;
+    findMinMax(head, &min, &max);
+
+    printf("Min = %d, Max = %d\n", min, max);
+    // Expected: Min = 1, Max = 9
+
+    // ================= EDGE CASES =================
+
+    // Case 2: Single node
+    Node* single = createNode(10);
+    findMinMax(single, &min, &max);
+    printf("Single node -> Min = %d, Max = %d\n", min, max);
+    // Expected: 10, 10
+
+    // Case 3: All elements same
+    Node* same = NULL;
+    same = insertEnd(same, 4);
+    same = insertEnd(same, 4);
+    same = insertEnd(same, 4);
+
+    findMinMax(same, &min, &max);
+    printf("All same -> Min = %d, Max = %d\n", min, max);
+    // Expected: 4, 4
+
+    // Case 4: Empty list
+    Node* empty = NULL;
+    findMinMax(empty, &min, &max);
+    printf("Empty list handled\n"); 
+    // Decide how you want to handle this (important!)
 
     return 0;
 }
