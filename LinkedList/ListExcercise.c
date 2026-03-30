@@ -62,6 +62,22 @@ int countOccurrences(Node* head, int key) {
     return count;
 }
 
+// ================= PROBLEM 3 =================
+// Check if two linked lists are identical
+
+int areIdentical(Node* head1, Node* head2) {
+    // TODO: Write your logic here
+    Node *p1 = head1, *p2 = head2;
+
+    while(p1 != NULL && p2 != NULL) {
+	    if(p1->data != p2-> data) return 0;
+
+	    p1 = p1->next; p2 = p2->next;
+    }
+
+    return (p1 == NULL && p2 == NULL);
+}
+
 // ================= PROBLEM 2 =================
 // Find smallest and largest element in singly linked list
 
@@ -129,7 +145,7 @@ int main() {
     printf("Single node no match = %d\n", count);
     // Expected: 0
 */
-
+/*
     Node* head = NULL;
 
     // List: 7 -> 2 -> 9 -> 1 -> 5
@@ -171,6 +187,62 @@ int main() {
     findMinMax(empty, &min, &max);
     printf("Empty list handled\n"); 
     // Decide how you want to handle this (important!)
+*/
 
+    // -------- Case 1: Identical lists --------
+    Node* list1 = NULL;
+    Node* list2 = NULL;
+
+    // List: 1 -> 2 -> 3 -> 4
+    list1 = insertEnd(list1, 1);
+    list1 = insertEnd(list1, 2);
+    list1 = insertEnd(list1, 3);
+    list1 = insertEnd(list1, 4);
+
+    list2 = insertEnd(list2, 1);
+    list2 = insertEnd(list2, 2);
+    list2 = insertEnd(list2, 3);
+    list2 = insertEnd(list2, 4);
+
+    printf("List1:\n");
+    printList(list1);
+    printf("List2:\n");
+    printList(list2);
+
+    printf("Are identical? %d\n", areIdentical(list1, list2));
+    // Expected: 1
+
+
+    // -------- Case 2: Same size, different elements --------
+    Node* list3 = NULL;
+    list3 = insertEnd(list3, 1);
+    list3 = insertEnd(list3, 2);
+    list3 = insertEnd(list3, 9);
+    list3 = insertEnd(list3, 4);
+
+    printf("Are identical? %d\n", areIdentical(list1, list3));
+    // Expected: 0
+
+
+    // -------- Case 3: Different lengths --------
+    Node* list4 = NULL;
+    list4 = insertEnd(list4, 1);
+    list4 = insertEnd(list4, 2);
+
+    printf("Are identical? %d\n", areIdentical(list1, list4));
+    // Expected: 0
+
+
+    // -------- Case 4: Both empty --------
+    Node* empty1 = NULL;
+    Node* empty2 = NULL;
+
+    printf("Both empty: %d\n", areIdentical(empty1, empty2));
+    // Expected: 1
+
+
+    // -------- Case 5: One empty, one not --------
+    printf("One empty: %d\n", areIdentical(list1, NULL));
+    // Expected: 0
     return 0;
 }
