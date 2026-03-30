@@ -11,6 +11,7 @@ struct node *insert_s(struct node *start, int data);
 struct node *insert(struct node *start, int data);
 void display(struct node *start);
 struct node *merge(struct node *p1, struct node *p2);
+struct node *concat(struct node *start1, struct node *start2);
 
 int main(void) {
 	struct node *start1 = NULL, *start2 = NULL, *start3 = NULL;
@@ -125,4 +126,24 @@ struct node *merge(struct node *p1, struct node *p2) {
 	}
 
 	return start3;
+}
+
+struct node *concat(struct node *start1, struct node *start2) {
+	struct node *p = NULL;
+
+	if(start1 == NULL) {
+		start1 = start2;
+		return start1;
+	}
+
+	if(start2 == NULL) 
+		return start1;
+
+	p = start1;
+	while(p->link != NULL) 
+		p = p->link;
+
+	p->link = start2;
+
+	return start1;
 }
