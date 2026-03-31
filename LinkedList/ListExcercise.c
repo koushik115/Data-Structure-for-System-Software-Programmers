@@ -99,6 +99,38 @@ void findMinMax(Node* head, int* min, int* max) {
 
 }
 
+// ================= PROBLEM 4 =================
+// Create a copy of a singly linked list
+
+Node* copyList(Node* head) {
+    // TODO: Write your logic here
+    Node *prev = NULL, *tmp = NULL, *p = NULL, *copyHead = NULL;
+    p = head;
+    
+    if(p == NULL) return NULL;
+
+    tmp = (Node *)malloc(sizeof(Node));
+    if(tmp == NULL) return NULL;
+    tmp->data = p->data;
+    tmp->next = NULL;
+    copyHead = prev = tmp;
+    p = p->next;
+
+
+    while(p != NULL) {
+	    tmp = (Node *)malloc(sizeof(Node));
+	    if(tmp == NULL) return NULL;
+	    tmp->data = p->data;
+	    tmp->next = NULL;
+	    prev->next = tmp;
+	    prev = tmp;
+	    p = p->next;
+    }
+
+    return copyHead;
+
+}
+
 int main() {
 /*
     Node* head = NULL;
@@ -188,7 +220,7 @@ int main() {
     printf("Empty list handled\n"); 
     // Decide how you want to handle this (important!)
 */
-
+/*
     // -------- Case 1: Identical lists --------
     Node* list1 = NULL;
     Node* list2 = NULL;
@@ -244,5 +276,58 @@ int main() {
     // -------- Case 5: One empty, one not --------
     printf("One empty: %d\n", areIdentical(list1, NULL));
     // Expected: 0
+*/
+    // -------- Case 1: Normal list --------
+    Node* head = NULL;
+
+    // List: 1 -> 2 -> 3 -> 4
+    head = insertEnd(head, 1);
+    head = insertEnd(head, 2);
+    head = insertEnd(head, 3);
+    head = insertEnd(head, 4);
+
+    printf("Original List:\n");
+    printList(head);
+
+    Node* copied = copyList(head);
+
+    printf("Copied List:\n");
+    printList(copied);
+    // Expected: same as original
+
+
+    // -------- Case 2: Modify original, copy should not change --------
+    head->data = 100;
+
+    printf("After modifying original:\n");
+    printf("Original:\n");
+    printList(head);
+
+    printf("Copied:\n");
+    printList(copied);
+    // Expected: copied list unchanged
+
+
+    // -------- Case 3: Empty list --------
+    Node* empty = NULL;
+    Node* copyEmpty = copyList(empty);
+
+    printf("Empty copy:\n");
+    printList(copyEmpty);
+    // Expected: NULL
+
+
+    // -------- Case 4: Single node --------
+    Node* single = createNode(42);
+    Node* copySingle = copyList(single);
+
+    printf("Single original:\n");
+    printList(single);
+
+    printf("Single copy:\n");
+    printList(copySingle);
+    // Expected: 42 -> NULL
+
+
     return 0;
 }
