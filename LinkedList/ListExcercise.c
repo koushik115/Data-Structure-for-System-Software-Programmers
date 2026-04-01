@@ -131,6 +131,28 @@ Node* copyList(Node* head) {
 
 }
 
+// ================= PROBLEM 5 =================
+// Create a new list which is reverse of given list (original unchanged)
+
+Node* reverseCopy(Node* head) {
+    // TODO: Write your logic here
+    Node *tmp = NULL, *p = NULL, *newHead = NULL;
+    p = head;
+
+    if(p == NULL) return NULL;
+
+    while(p != NULL) {
+	    tmp = (Node *)malloc(sizeof(Node));
+	    if(tmp == NULL) return NULL;
+	    tmp->data = p->data;
+	    tmp->next = newHead;
+	    newHead = tmp;
+	    p = p->next;
+    }
+
+    return newHead;
+}
+
 int main() {
 /*
     Node* head = NULL;
@@ -277,6 +299,7 @@ int main() {
     printf("One empty: %d\n", areIdentical(list1, NULL));
     // Expected: 0
 */
+/*	
     // -------- Case 1: Normal list --------
     Node* head = NULL;
 
@@ -327,7 +350,50 @@ int main() {
     printf("Single copy:\n");
     printList(copySingle);
     // Expected: 42 -> NULL
+*/
 
+    // -------- Case 1: Normal list --------
+    Node* head = NULL;
+
+    // List: 1 -> 2 -> 3 -> 4 -> 5
+    head = insertEnd(head, 1);
+    head = insertEnd(head, 2);
+    head = insertEnd(head, 3);
+    head = insertEnd(head, 4);
+    head = insertEnd(head, 5);
+
+    printf("Original List:\n");
+    printList(head);
+
+    Node* reversed = reverseCopy(head);
+
+    printf("Reversed Copy:\n");
+    printList(reversed);
+    // Expected: 5 -> 4 -> 3 -> 2 -> 1
+
+    printf("Original Again (should be unchanged):\n");
+    printList(head);
+
+
+    // -------- Case 2: Single node --------
+    Node* single = createNode(10);
+    Node* revSingle = reverseCopy(single);
+
+    printf("Single original:\n");
+    printList(single);
+
+    printf("Single reversed copy:\n");
+    printList(revSingle);
+    // Expected: 10 -> NULL
+
+
+    // -------- Case 3: Empty list --------
+    Node* empty = NULL;
+    Node* revEmpty = reverseCopy(empty);
+
+    printf("Empty reversed copy:\n");
+    printList(revEmpty);
+    // Expected: NULL
 
     return 0;
 }
