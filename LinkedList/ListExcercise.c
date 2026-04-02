@@ -153,6 +153,61 @@ Node* reverseCopy(Node* head) {
     return newHead;
 }
 
+// ================= PROBLEM 6(a) =================
+// Swap adjacent nodes by exchanging data
+
+Node* swapData(Node* head) {
+    // TODO: Write your logic here
+    Node *tmp = head;
+    int currentData = -1, nextData = -1;
+    if(tmp == NULL) return NULL;
+
+    while(tmp != NULL && tmp->next != NULL) {
+	currentData = tmp->data;
+	nextData = tmp->next->data;
+	tmp->data = nextData;
+	tmp->next->data = currentData;
+	tmp = tmp->next->next;
+    }
+
+    return head;
+
+}
+
+// ================= PROBLEM 6(b) =================
+// Swap adjacent nodes by rearranging links
+
+Node* swapLinks(Node* head) {
+    if(head == NULL || head->next == NULL)
+        return head;
+
+    Node *prev = NULL;
+    Node *current = head;
+    Node *next = NULL;
+    Node *nextPair = NULL;
+
+    Node *newHead = head->next;
+
+    while(current != NULL && current->next != NULL) {
+        next = current->next;
+        nextPair = next->next;
+
+        // swap
+        next->next = current;
+        current->next = nextPair;
+
+        // connect with previous pair
+        if(prev != NULL)
+            prev->next = next;
+
+        // move forward
+        prev = current;
+        current = nextPair;
+    }
+
+    return newHead;
+}
+
 int main() {
 /*
     Node* head = NULL;
@@ -351,7 +406,7 @@ int main() {
     printList(copySingle);
     // Expected: 42 -> NULL
 */
-
+/*
     // -------- Case 1: Normal list --------
     Node* head = NULL;
 
@@ -394,6 +449,65 @@ int main() {
     printf("Empty reversed copy:\n");
     printList(revEmpty);
     // Expected: NULL
+*/
+
+    // -------- Case 1: Even number of nodes --------
+    Node* head1 = NULL;
+
+    // List: 1 -> 2 -> 3 -> 4 -> 5 -> 6
+    for (int i = 1; i <= 6; i++)
+        head1 = insertEnd(head1, i);
+
+    printf("Original List:\n");
+    printList(head1);
+
+    Node* dataSwap = swapData(head1);
+    printf("After swap (data):\n");
+    printList(dataSwap);
+    // Expected: 2 -> 1 -> 4 -> 3 -> 6 -> 5
+
+
+    // Recreate list (IMPORTANT for second test)
+    Node* head2 = NULL;
+    for (int i = 1; i <= 6; i++)
+        head2 = insertEnd(head2, i);
+
+    Node* linkSwap = swapLinks(head2);
+    printf("After swap (links):\n");
+    printList(linkSwap);
+    // Expected: 2 -> 1 -> 4 -> 3 -> 6 -> 5
+
+
+    // -------- Case 2: Odd number of nodes --------
+    Node* odd = NULL;
+    for (int i = 1; i <= 5; i++)
+        odd = insertEnd(odd, i);
+
+    printf("Odd List:\n");
+    printList(odd);
+
+    odd = swapLinks(odd);
+    printf("After swap (links):\n");
+    printList(odd);
+    // Expected: 2 -> 1 -> 4 -> 3 -> 5
+
+
+    // -------- Case 3: Single node --------
+    Node* single = createNode(10);
+    single = swapLinks(single);
+
+    printf("Single node:\n");
+    printList(single);
+    // Expected: 10
+
+
+    // -------- Case 4: Empty list --------
+    Node* empty = NULL;
+    empty = swapLinks(empty);
+
+    printf("Empty list:\n");
+    printList(empty);
+    // Expected: NULL	
 
     return 0;
 }
