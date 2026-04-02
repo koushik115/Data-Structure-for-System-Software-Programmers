@@ -7,6 +7,13 @@ typedef struct Node {
     struct Node* next;
 } Node;
 
+// ================= DOUBLY NODE =================
+typedef struct DNode {
+    int data;
+    struct DNode* next;
+    struct DNode* prev;
+} DNode;
+
 // ================= HELPER FUNCTIONS =================
 
 // Create new node
@@ -37,6 +44,42 @@ void printList(Node* head) {
     Node* temp = head;
     while (temp) {
         printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
+// Create node
+DNode* createDNode(int data) {
+    DNode* newNode = (DNode*)malloc(sizeof(DNode));
+    newNode->data = data;
+    newNode->next = NULL;
+    newNode->prev = NULL;
+    return newNode;
+}
+
+// Insert at end
+DNode* insertEndD(DNode* head, int data) {
+    DNode* newNode = createDNode(data);
+
+    if (head == NULL)
+        return newNode;
+
+    DNode* temp = head;
+    while (temp->next)
+        temp = temp->next;
+
+    temp->next = newNode;
+    newNode->prev = temp;
+
+    return head;
+}
+
+// Print forward
+void printDList(DNode* head) {
+    DNode* temp = head;
+    while (temp) {
+        printf("%d <-> ", temp->data);
         temp = temp->next;
     }
     printf("NULL\n");
@@ -203,6 +246,42 @@ Node* swapLinks(Node* head) {
         // move forward
         prev = current;
         current = nextPair;
+    }
+
+    return newHead;
+}
+
+// ================= PROBLEM 7 =================
+// Swap adjacent nodes in doubly linked list by rearranging links
+
+DNode* swapAdjacentDLL(DNode* head) {
+    // TODO: Write your logic here
+    DNode *prev, *current, *next, *nextPair, *newHead;
+    if(head == NULL || head->next == NULL) return head;
+
+    prev = NULL;
+    current = head;
+    next = NULL;
+    nextPair = NULL;
+    newHead = current->next;
+    newHead->prev = NULL;
+
+    while(current != NULL && current->next != NULL) {
+	    next = current->next;
+	    nextPair = next->next;
+
+	    next->next = current;
+	    next->prev = prev;
+
+	    current->prev = next;
+	    current->next = nextPair;
+
+	    if(prev != NULL) prev->next = next;
+
+	    if(nextPair != NULL) nextPair->prev = current;
+
+	    prev = current;
+	    current = nextPair;
     }
 
     return newHead;
@@ -450,7 +529,7 @@ int main() {
     printList(revEmpty);
     // Expected: NULL
 */
-
+/*
     // -------- Case 1: Even number of nodes --------
     Node* head1 = NULL;
 
@@ -507,6 +586,54 @@ int main() {
 
     printf("Empty list:\n");
     printList(empty);
+    // Expected: NULL	
+*/
+
+    // -------- Case 1: Even nodes --------
+    DNode* head = NULL;
+
+    // 1 <-> 2 <-> 3 <-> 4 <-> 5 <-> 6
+    for (int i = 1; i <= 6; i++)
+        head = insertEndD(head, i);
+
+    printf("Original DLL:\n");
+    printDList(head);
+
+    head = swapAdjacentDLL(head);
+
+    printf("After swap:\n");
+    printDList(head);
+    // Expected: 2 <-> 1 <-> 4 <-> 3 <-> 6 <-> 5
+
+
+    // -------- Case 2: Odd nodes --------
+    DNode* odd = NULL;
+    for (int i = 1; i <= 5; i++)
+        odd = insertEndD(odd, i);
+
+    printf("Odd DLL:\n");
+    printDList(odd);
+
+    odd = swapAdjacentDLL(odd);
+
+    printf("After swap:\n");
+    printDList(odd);
+    // Expected: 2 <-> 1 <-> 4 <-> 3 <-> 5
+
+
+    // -------- Case 3: Single node --------
+    DNode* single = createDNode(10);
+    single = swapAdjacentDLL(single);
+
+    printDList(single);
+    // Expected: 10
+
+
+    // -------- Case 4: Empty --------
+    DNode* empty = NULL;
+    empty = swapAdjacentDLL(empty);
+
+    printDList(empty);
     // Expected: NULL	
 
     return 0;
