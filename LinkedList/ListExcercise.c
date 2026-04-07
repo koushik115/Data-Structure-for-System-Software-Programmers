@@ -349,6 +349,47 @@ Node* swapFirstLastLinks(Node* head) {
 
 }
 
+// ================= PROBLEM 9 =================
+// Move the largest element to the end of the list
+
+Node* moveMaxToEnd(Node* head) {
+    // TODO: Write your logic here
+    Node *p = NULL, *p1 = NULL, *p2 = NULL;
+    int max;
+
+    if(head == NULL || head->next == NULL) return head;
+    max = head->data;
+
+    p = head;
+    while(p != NULL && p->next != NULL) {
+	    if(p->next->data > max) {
+		    p1 = p;
+		    p2 = p1->next;
+		    max = p->next->data;
+	    }
+
+	    p = p->next;
+    }
+    
+    if(p1 == NULL && p2 == NULL) {
+	    p1 = head;
+	    head = head->next;
+	    p1->next = NULL;
+	    p->next = p1;
+
+	    return head;
+
+    }
+
+    if(p2->next != NULL)
+    	p1->next = p2->next;
+    p2->next = NULL;
+    if(p != p2)
+    	p->next = p2;
+
+    return head;
+}
+
 int main() {
 /*
     Node* head = NULL;
@@ -698,7 +739,7 @@ int main() {
     printDList(empty);
     // Expected: NULL	
 */
-
+/*
     // -------- Case 1: Normal list --------
     Node* head = NULL;
 
@@ -748,6 +789,62 @@ int main() {
     empty = swapFirstLastLinks(empty);
     printList(empty);
     // Expected: NULL
-    //
+    */
+
+    // -------- Case 1: Normal list --------
+    Node* head = NULL;
+
+    // 3 -> 1 -> 5 -> 2 -> 4
+    head = insertEnd(head, 3);
+    head = insertEnd(head, 1);
+    head = insertEnd(head, 5);
+    head = insertEnd(head, 2);
+    head = insertEnd(head, 4);
+
+    printf("Original List:\n");
+    printList(head);
+
+    head = moveMaxToEnd(head);
+
+    printf("After moving max to end:\n");
+    printList(head);
+    // Expected: 3 -> 1 -> 2 -> 4 -> 5
+
+
+    // -------- Case 2: Max already at end --------
+    Node* head2 = NULL;
+    head2 = insertEnd(head2, 1);
+    head2 = insertEnd(head2, 2);
+    head2 = insertEnd(head2, 3);
+
+    head2 = moveMaxToEnd(head2);
+    printList(head2);
+    // Expected: unchanged
+
+
+    // -------- Case 3: Max at head --------
+    Node* head3 = NULL;
+    head3 = insertEnd(head3, 9);
+    head3 = insertEnd(head3, 2);
+    head3 = insertEnd(head3, 3);
+
+    head3 = moveMaxToEnd(head3);
+    printList(head3);
+    // Expected: 2 -> 3 -> 9
+
+
+    // -------- Case 4: Single node --------
+    Node* single = createNode(10);
+    single = moveMaxToEnd(single);
+    printList(single);
+    // Expected: 10
+
+
+    // -------- Case 5: Empty --------
+    Node* empty = NULL;
+    empty = moveMaxToEnd(empty);
+    printList(empty);
+    // Expected: NULL
+	
     return 0;
 }
