@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 
 // ================= NODE DEFINITION =================
 typedef struct Node {
@@ -285,6 +286,67 @@ DNode* swapAdjacentDLL(DNode* head) {
     }
 
     return newHead;
+}
+
+// ================= PROBLEM 8(a) =================
+// Swap first and last node by exchanging data
+
+Node* swapFirstLastData(Node* head) {
+    // TODO: Write your logic here
+    int firstInfo = INT_MIN;
+    int lastInfo = INT_MIN;
+    Node *p = head;
+
+    if(head == NULL) return NULL;
+
+    firstInfo = head->data;
+
+    while(p->next != NULL)
+	    p = p->next;
+
+    lastInfo = p->data;
+
+    head->data = lastInfo;
+    p->data = firstInfo;
+
+    return head;
+
+}
+
+// ================= PROBLEM 8(b) =================
+// Swap first and last node by rearranging links
+
+Node* swapFirstLastLinks(Node* head) {
+    // TODO: Write your logic here
+    Node *p1 = NULL, *p2 = NULL;
+
+    if(head == NULL) return NULL;
+
+    p1 = head;
+    p2 = head->next;
+
+    if(p2 == NULL) {
+	    return head;
+    } else if(p2->next == NULL) {
+	    p2->next = p1;
+	    p1->next = NULL;
+	    head = p2;
+
+	    return head;
+    }
+
+    while(p2 != NULL && p2->next != NULL) {
+	    p1 = p2;
+	    p2 = p2->next;
+    }
+
+    p2->next = head->next;
+    head->next = NULL;
+    p1->next = head;
+    head = p2;
+
+    return head;
+
 }
 
 int main() {
@@ -588,7 +650,7 @@ int main() {
     printList(empty);
     // Expected: NULL	
 */
-
+/*
     // -------- Case 1: Even nodes --------
     DNode* head = NULL;
 
@@ -635,6 +697,57 @@ int main() {
 
     printDList(empty);
     // Expected: NULL	
+*/
 
+    // -------- Case 1: Normal list --------
+    Node* head = NULL;
+
+    // 1 -> 2 -> 3 -> 4 -> 5
+    for(int i = 1; i <= 5; i++)
+        head = insertEnd(head, i);
+
+    printf("Original List:\n");
+    printList(head);
+
+    Node* dataSwap = swapFirstLastData(head);
+    printf("After swap (data):\n");
+    printList(dataSwap);
+    // Expected: 5 -> 2 -> 3 -> 4 -> 1
+
+
+    // Recreate for link swap
+    Node* head2 = NULL;
+    for(int i = 1; i <= 5; i++)
+        head2 = insertEnd(head2, i);
+
+    Node* linkSwap = swapFirstLastLinks(head2);
+    printf("After swap (links):\n");
+    printList(linkSwap);
+    // Expected: 5 -> 2 -> 3 -> 4 -> 1
+
+
+    // -------- Case 2: Two nodes --------
+    Node* two = NULL;
+    two = insertEnd(two, 10);
+    two = insertEnd(two, 20);
+
+    two = swapFirstLastLinks(two);
+    printList(two);
+    // Expected: 20 -> 10
+
+
+    // -------- Case 3: Single node --------
+    Node* single = createNode(7);
+    single = swapFirstLastLinks(single);
+    printList(single);
+    // Expected: 7
+
+
+    // -------- Case 4: Empty --------
+    Node* empty = NULL;
+    empty = swapFirstLastLinks(empty);
+    printList(empty);
+    // Expected: NULL
+    //
     return 0;
 }
