@@ -355,7 +355,7 @@ Node* swapFirstLastLinks(Node* head) {
 Node* moveMaxToEnd(Node* head) {
     // TODO: Write your logic here
     Node *p = NULL, *p1 = NULL, *p2 = NULL;
-    int max;
+    int max = INT_MAX;
 
     if(head == NULL || head->next == NULL) return head;
     max = head->data;
@@ -386,6 +386,36 @@ Node* moveMaxToEnd(Node* head) {
     p2->next = NULL;
     if(p != p2)
     	p->next = p2;
+
+    return head;
+}
+
+// ================= PROBLEM 10 =================
+// Move smallest element to beginning of list
+
+Node* moveMinToFront(Node* head) {
+    // TODO: Write your logic here
+    Node *p = NULL, *p1 = NULL, *p2 = NULL;
+    int min = INT_MIN;
+
+    if(head == NULL || head->next == NULL) return head;
+    p = head;
+    min = p->data;
+
+    while(p != NULL && p->next != NULL) {
+	    if(p->next->data < min) {
+		    min = p->next->data;
+		    p1 = p;
+		    p2 = p1->next;
+	    }
+
+	    p = p->next;
+    }
+
+    if(p1 == NULL && p2 == NULL) return head;
+    p1->next = p2->next;
+    p2->next = head;
+    head = p2;
 
     return head;
 }
@@ -792,7 +822,7 @@ int main() {
     */
 
     // -------- Case 1: Normal list --------
-    Node* head = NULL;
+  /*  Node* head = NULL;
 
     // 3 -> 1 -> 5 -> 2 -> 4
     head = insertEnd(head, 3);
@@ -845,6 +875,63 @@ int main() {
     empty = moveMaxToEnd(empty);
     printList(empty);
     // Expected: NULL
-	
+*/
+
+    // -------- Case 1: Normal list --------
+    Node* head = NULL;
+
+    // 3 -> 1 -> 5 -> 2 -> 4
+    head = insertEnd(head, 3);
+    head = insertEnd(head, 1);
+    head = insertEnd(head, 5);
+    head = insertEnd(head, 2);
+    head = insertEnd(head, 4);
+
+    printf("Original List:\n");
+    printList(head);
+
+    head = moveMinToFront(head);
+
+    printf("After moving min to front:\n");
+    printList(head);
+    // Expected: 1 -> 3 -> 5 -> 2 -> 4
+
+
+    // -------- Case 2: Min already at head --------
+    Node* head2 = NULL;
+    head2 = insertEnd(head2, 1);
+    head2 = insertEnd(head2, 2);
+    head2 = insertEnd(head2, 3);
+
+    head2 = moveMinToFront(head2);
+    printList(head2);
+    // Expected: unchanged
+
+
+    // -------- Case 3: Min at end --------
+    Node* head3 = NULL;
+    head3 = insertEnd(head3, 5);
+    head3 = insertEnd(head3, 4);
+    head3 = insertEnd(head3, 3);
+    head3 = insertEnd(head3, 1);
+
+    head3 = moveMinToFront(head3);
+    printList(head3);
+    // Expected: 1 -> 5 -> 4 -> 3
+
+
+    // -------- Case 4: Single node --------
+    Node* single = createNode(10);
+    single = moveMinToFront(single);
+    printList(single);
+    // Expected: 10
+
+
+    // -------- Case 5: Empty --------
+    Node* empty = NULL;
+    empty = moveMinToFront(empty);
+    printList(empty);
+    // Expected: NULL
+    //
     return 0;
 }
