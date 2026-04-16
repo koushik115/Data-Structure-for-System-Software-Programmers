@@ -458,6 +458,31 @@ Node* deleteAllOccurrences(Node* head, int key) {
     return head;
 }
 
+// ================= PROBLEM 12 =================
+// Print elements of L2 at positions given by L1
+
+void printByPositions(Node* l1, Node* l2) {
+    // TODO: Write your logic here
+    Node *p1 = NULL, *p2 = NULL;
+
+    if(l1 == NULL) return;
+
+    p1 = l1;
+    p2 = l2;
+
+    while(p1 != NULL) {
+	    int pos = p1->data;
+	    while(p2 != NULL && --pos > 0)
+		    p2 = p2->next;
+	    if(p2 != NULL)
+		    printf("%d ", p2->data);
+	    p2 = l2;
+	    p1 = p1->next;
+    }
+
+    printf("\n");
+}
+
 int main() {
 /*
     Node* head = NULL;
@@ -971,7 +996,7 @@ int main() {
     printList(empty);
     // Expected: NULL
  */   
-
+/*
     // -------- Case 1: Multiple occurrences --------
     Node* head = NULL;
 
@@ -1033,7 +1058,52 @@ int main() {
     single = deleteAllOccurrences(single, 10);
     printList(single);
     // Expected: NULL
+*/
 
+    // L2: 10 -> 20 -> 30 -> 40 -> 50 -> 60 -> 70 -> 80
+    Node* l2 = NULL;
+    for(int i = 1; i <= 8; i++)
+        l2 = insertEnd(l2, i * 10);
+
+    printf("L2:\n");
+    printList(l2);
+
+    // -------- Case 1 --------
+    Node* l1 = NULL;
+    l1 = insertEnd(l1, 1);
+    l1 = insertEnd(l1, 2);
+    l1 = insertEnd(l1, 5);
+    l1 = insertEnd(l1, 7);
+    l1 = insertEnd(l1, 8);
+
+    printf("Positions (L1):\n");
+    printList(l1);
+
+    printf("Output:\n");
+    printByPositions(l1, l2);
+    // Expected: 10 20 50 70 80
+
+
+    // -------- Case 2: Positions out of range --------
+    Node* l1_2 = NULL;
+    l1_2 = insertEnd(l1_2, 2);
+    l1_2 = insertEnd(l1_2, 10); // out of range
+    l1_2 = insertEnd(l1_2, 3);
+
+    printf("Output:\n");
+    printByPositions(l1_2, l2);
+    // Expected: 20 30
+
+
+    // -------- Case 3: Empty L1 --------
+    Node* empty = NULL;
+    printByPositions(empty, l2);
+    // Expected: nothing
+
+
+    // -------- Case 4: Empty L2 --------
+    printByPositions(l1, NULL);
+    // Expected: nothing
 
     return 0;
 }
