@@ -420,6 +420,44 @@ Node* moveMinToFront(Node* head) {
     return head;
 }
 
+// ================= PROBLEM 11 =================
+// Delete all nodes with value N
+
+Node* deleteAllOccurrences(Node* head, int key) {
+    // TODO: Write your logic here
+    Node *prev = NULL, *current = NULL, *p;
+
+    if(head == NULL) return NULL;
+
+    if(head->data == key) {
+	    p = head;
+	    head = head->next;
+	    free(p);
+    }
+
+    current = head;
+    while(current != NULL) {
+	    if(current->data == key) {
+		    p = current;
+		    if(prev != NULL)
+		    	prev->next = current->next;
+		    if(prev != NULL)
+		    	current = prev->next;
+		    if(current == head) {
+			    head = head->next;
+			    current = head;
+		    }
+
+		    free(p);
+	    } else {
+	    	prev = current;
+	    	current = current->next;
+	    }
+    }
+
+    return head;
+}
+
 int main() {
 /*
     Node* head = NULL;
@@ -876,7 +914,7 @@ int main() {
     printList(empty);
     // Expected: NULL
 */
-
+/*
     // -------- Case 1: Normal list --------
     Node* head = NULL;
 
@@ -932,6 +970,70 @@ int main() {
     empty = moveMinToFront(empty);
     printList(empty);
     // Expected: NULL
-    //
+ */   
+
+    // -------- Case 1: Multiple occurrences --------
+    Node* head = NULL;
+
+    // 1 -> 2 -> 3 -> 2 -> 4 -> 2 -> 5
+    head = insertEnd(head, 1);
+    head = insertEnd(head, 2);
+    head = insertEnd(head, 3);
+    head = insertEnd(head, 2);
+    head = insertEnd(head, 4);
+    head = insertEnd(head, 2);
+    head = insertEnd(head, 5);
+
+    printf("Original:\n");
+    printList(head);
+
+    head = deleteAllOccurrences(head, 2);
+
+    printf("After deleting 2:\n");
+    printList(head);
+    // Expected: 1 -> 3 -> 4 -> 5
+
+
+    // -------- Case 2: All nodes match --------
+    Node* all = NULL;
+    all = insertEnd(all, 7);
+    all = insertEnd(all, 7);
+    all = insertEnd(all, 7);
+
+    all = deleteAllOccurrences(all, 7);
+    printList(all);
+    // Expected: NULL
+
+
+    // -------- Case 3: No match --------
+    Node* noMatch = NULL;
+    noMatch = insertEnd(noMatch, 1);
+    noMatch = insertEnd(noMatch, 2);
+    noMatch = insertEnd(noMatch, 3);
+
+    noMatch = deleteAllOccurrences(noMatch, 9);
+    printList(noMatch);
+    // Expected: unchanged
+
+
+    // -------- Case 4: Key at head --------
+    Node* headCase = NULL;
+    headCase = insertEnd(headCase, 5);
+    headCase = insertEnd(headCase, 5);
+    headCase = insertEnd(headCase, 1);
+    headCase = insertEnd(headCase, 2);
+
+    headCase = deleteAllOccurrences(headCase, 5);
+    printList(headCase);
+    // Expected: 1 -> 2
+
+
+    // -------- Case 5: Single node --------
+    Node* single = createNode(10);
+    single = deleteAllOccurrences(single, 10);
+    printList(single);
+    // Expected: NULL
+
+
     return 0;
 }
