@@ -483,6 +483,26 @@ void printByPositions(Node* l1, Node* l2) {
     printf("\n");
 }
 
+// ================= PROBLEM 13 =================
+// Move first node to end of list
+
+Node* moveFirstToEnd(Node* head) {
+    // TODO: Write your logic here
+    Node *start = NULL, *p = NULL;
+    
+    if(head == NULL || head->next == NULL) return head;
+
+    p = start = head;
+    while(p != NULL && p->next != NULL)
+	    p = p->next;
+
+    head = head->next;
+    start->next = p->next;
+    p->next = start;
+
+    return head;
+}
+
 int main() {
 /*
     Node* head = NULL;
@@ -1059,7 +1079,7 @@ int main() {
     printList(single);
     // Expected: NULL
 */
-
+/*
     // L2: 10 -> 20 -> 30 -> 40 -> 50 -> 60 -> 70 -> 80
     Node* l2 = NULL;
     for(int i = 1; i <= 8; i++)
@@ -1104,6 +1124,47 @@ int main() {
     // -------- Case 4: Empty L2 --------
     printByPositions(l1, NULL);
     // Expected: nothing
+*/
 
+    // -------- Case 1: Normal list --------
+    Node* head = NULL;
+
+    // 1 -> 2 -> 3 -> 4 -> 5
+    for(int i = 1; i <= 5; i++)
+        head = insertEnd(head, i);
+
+    printf("Original List:\n");
+    printList(head);
+
+    head = moveFirstToEnd(head);
+
+    printf("After moving first to end:\n");
+    printList(head);
+    // Expected: 2 -> 3 -> 4 -> 5 -> 1
+
+
+    // -------- Case 2: Two nodes --------
+    Node* two = NULL;
+    two = insertEnd(two, 10);
+    two = insertEnd(two, 20);
+
+    two = moveFirstToEnd(two);
+    printList(two);
+    // Expected: 20 -> 10
+
+
+    // -------- Case 3: Single node --------
+    Node* single = createNode(7);
+    single = moveFirstToEnd(single);
+    printList(single);
+    // Expected: 7
+
+
+    // -------- Case 4: Empty --------
+    Node* empty = NULL;
+    empty = moveFirstToEnd(empty);
+    printList(empty);
+    // Expected: NULL	
+   	
     return 0;
 }
