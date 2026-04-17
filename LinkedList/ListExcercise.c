@@ -508,12 +508,10 @@ Node* moveFirstToEnd(Node* head) {
 
 Node* moveLastToFront(Node* head) {
     // TODO: Write your logic here
-    
     Node *p = NULL;
     if(head == NULL || head->next == NULL) return head;
 
-    p = head;
-    
+    p = head; 
     while(p != NULL && p->next != NULL && p->next->next != NULL)
 	    p = p->next;
 
