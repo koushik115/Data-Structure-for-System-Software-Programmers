@@ -596,6 +596,26 @@ void insertBefore(Node* p, int data) {
     p->next = tmp;
 }
 
+// ================= PROBLEM 18 =================
+// Free all nodes in the list
+
+Node* destroy(Node* head) {
+    // TODO: Write your logic here
+    Node *p = NULL, *q = NULL;
+
+    if(head == NULL) return NULL;
+
+    p = head;
+    while(p != NULL) {
+	    q = p->next;
+	    free(p);
+	    p = q;
+    }
+
+    head = NULL;
+    return head;
+}
+
 int main() {
 /*
     Node* head = NULL;
@@ -1401,7 +1421,7 @@ int main() {
     printList(head);
     // Expected: 1 -> 2 -> 4 -> 5
 */
-
+/*
     Node* head = NULL;
 
     // 1 -> 2 -> 3 -> 4
@@ -1421,6 +1441,32 @@ int main() {
     insertBefore(p, 77);
     printf("After insertBefore (3):\n");
     printList(head);
-    // Expected: 1 -> 2 -> 77 -> 3 -> 99 -> 4	
+    // Expected: 1 -> 2 -> 77 -> 3 -> 99 -> 4
+*/
+
+    // -------- Case 1: Normal list --------
+    Node* head = NULL;
+
+    // 1 -> 2 -> 3 -> 4 -> 5
+    for(int i = 1; i <= 5; i++)
+        head = insertEnd(head, i);
+
+    printf("Before destroy:\n");
+    printList(head);
+
+    head = destroy(head);
+
+    printf("After destroy:\n");
+    printList(head);
+    // Expected: NULL
+
+
+    // -------- Case 2: Already empty --------
+    Node* empty = NULL;
+    empty = destroy(empty);
+    printList(empty);
+    // Expected: NULL	
+
+
     return 0;
 }
