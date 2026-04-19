@@ -563,6 +563,39 @@ void deleteNode(Node* node) {
     tmp = NULL;
 }
 
+// ================= PROBLEM 17 =================
+
+// Insert AFTER node p
+void insertAfter(Node* p, int data) {
+    // TODO
+    Node *tmp = NULL;
+
+    if(p == NULL) return;
+
+    tmp = (Node *)malloc(sizeof(Node));
+    if(tmp == NULL) return;
+
+    tmp->data = data;
+    tmp->next = p->next;
+    p->next = tmp;
+}
+
+// Insert BEFORE node p
+void insertBefore(Node* p, int data) {
+    // TODO
+    Node *tmp = NULL;
+
+    if(p == NULL) return;
+
+    tmp = (Node *)malloc(sizeof(Node));
+    if(tmp == NULL) return;
+
+    tmp->data = p->data;
+    p->data = data;
+    tmp->next = p->next;
+    p->next = tmp;
+}
+
 int main() {
 /*
     Node* head = NULL;
@@ -1349,6 +1382,7 @@ int main() {
     printList(single);
     // Expected: 10
 */
+/*	
     Node* head = NULL;
 
     // 1 -> 2 -> 3 -> 4 -> 5
@@ -1366,6 +1400,27 @@ int main() {
     printf("After deleting node 3:\n");
     printList(head);
     // Expected: 1 -> 2 -> 4 -> 5
+*/
 
+    Node* head = NULL;
+
+    // 1 -> 2 -> 3 -> 4
+    for(int i = 1; i <= 4; i++)
+        head = insertEnd(head, i);
+
+    printf("Original:\n");
+    printList(head);
+
+    Node* p = head->next->next; // node with value 3
+
+    insertAfter(p, 99);
+    printf("After insertAfter (3):\n");
+    printList(head);
+    // Expected: 1 -> 2 -> 3 -> 99 -> 4
+
+    insertBefore(p, 77);
+    printf("After insertBefore (3):\n");
+    printList(head);
+    // Expected: 1 -> 2 -> 77 -> 3 -> 99 -> 4	
     return 0;
 }
