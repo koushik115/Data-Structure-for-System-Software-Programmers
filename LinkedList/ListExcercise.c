@@ -522,6 +522,47 @@ Node* moveLastToFront(Node* head) {
     return head;
 }
 
+// ================= PROBLEM 15 =================
+// Move node at position 'pos' n steps forward (towards head)
+/*
+Node* moveNodeForward(Node* head, int pos, int n) {
+    // TODO: Write your logic here
+    Node *p = NULL, *q = NULL, *r = NULL, *s = NULL;
+
+    if(head == NULL || head->next == NULL || n == 0) return head;
+
+    p = head;
+    while(p != NULL && p->next != NULL && --pos > 0) {
+	    q = p;
+	    p = p->next;
+    }
+
+    r = head;
+    while(--count > 0 && r != NULL) {
+    	s = r;
+	r = r->next;
+    }
+
+
+    return head;
+}
+*/
+
+// ================= PROBLEM 16 =================
+// Delete given node (only pointer to that node is provided)
+
+void deleteNode(Node* node) {
+    // TODO: Write your logic here
+    Node *tmp = NULL;
+    if(node == NULL || node->next == NULL) return;
+
+    tmp = node->next;
+    node->data = tmp->data;
+    node->next = tmp->next;
+    free(tmp);
+    tmp = NULL;
+}
+
 int main() {
 /*
     Node* head = NULL;
@@ -539,6 +580,46 @@ int main() {
     printList(head);
 
     int key = 2;
+    // -------- Case 1 --------
+    Node* head = NULL;
+
+    // 1 -> 2 -> 3 -> 4 -> 5
+    for(int i = 1; i <= 5; i++)
+        head = insertEnd(head, i);
+
+    printf("Original:\n");
+    printList(head);
+
+    head = moveNodeForward(head, 4, 2);
+
+    printf("After move:\n");
+    printList(head);
+    // Expected: 1 -> 4 -> 2 -> 3 -> 5
+
+
+    // -------- Case 2: Move beyond head --------
+    head = moveNodeForward(head, 3, 5);
+    printList(head);
+    // Expected: node moves to head
+
+
+    // -------- Case 3: n = 0 --------
+    head = moveNodeForward(head, 2, 0);
+    printList(head);
+    // Expected: unchanged
+
+
+    // -------- Case 4: Invalid position --------
+    head = moveNodeForward(head, 10, 2);
+    printList(head);
+    // Expected: unchanged
+
+
+    // -------- Case 5: Single node --------
+    Node* single = createNode(10);
+    single = moveNodeForward(single, 1, 3);
+    printList(single);
+    // Expected: 10
     int count = countOccurrences(head, key);
 
     printf("Occurrences of %d = %d\n", key, count);
@@ -1185,7 +1266,7 @@ int main() {
     printList(empty);
     // Expected: NULL	
 */
-
+/*
     // -------- Case 1: Normal list --------
     Node* head = NULL;
 
@@ -1225,6 +1306,66 @@ int main() {
     empty = moveLastToFront(empty);
     printList(empty);
     // Expected: NULL
+*/
+/*
+    // -------- Case 1 --------
+    Node* head = NULL;
+
+    // 1 -> 2 -> 3 -> 4 -> 5
+    for(int i = 1; i <= 5; i++)
+        head = insertEnd(head, i);
+
+    printf("Original:\n");
+    printList(head);
+
+    head = moveNodeForward(head, 4, 2);
+
+    printf("After move:\n");
+    printList(head);
+    // Expected: 1 -> 4 -> 2 -> 3 -> 5
+
+
+    // -------- Case 2: Move beyond head --------
+    head = moveNodeForward(head, 3, 5);
+    printList(head);
+    // Expected: node moves to head
+
+
+    // -------- Case 3: n = 0 --------
+    head = moveNodeForward(head, 2, 0);
+    printList(head);
+    // Expected: unchanged
+
+
+    // -------- Case 4: Invalid position --------
+    head = moveNodeForward(head, 10, 2);
+    printList(head);
+    // Expected: unchanged
+
+
+    // -------- Case 5: Single node --------
+    Node* single = createNode(10);
+    single = moveNodeForward(single, 1, 3);
+    printList(single);
+    // Expected: 10
+*/
+    Node* head = NULL;
+
+    // 1 -> 2 -> 3 -> 4 -> 5
+    for(int i = 1; i <= 5; i++)
+        head = insertEnd(head, i);
+
+    printf("Original:\n");
+    printList(head);
+
+    // Suppose we want to delete node with value 3
+    Node* temp = head->next->next; // node with data = 3
+
+    deleteNode(temp);
+
+    printf("After deleting node 3:\n");
+    printList(head);
+    // Expected: 1 -> 2 -> 4 -> 5
 
     return 0;
 }
