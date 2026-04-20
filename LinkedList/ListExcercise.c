@@ -616,6 +616,52 @@ Node* destroy(Node* head) {
     return head;
 }
 
+// ================= PROBLEM 19 =================
+// Remove duplicates from sorted linked list
+//
+Node* removeDuplicates(Node* head) {
+	// TODO: Write your logic here
+	Node *p = head, *q = NULL, *r = NULL, *s = NULL;
+
+	if(p == NULL || p->next == NULL) return head;
+
+	q = p->next;
+	while(p != NULL && p->next != NULL) {
+		if(p != NULL && q != NULL && p->data == q->data) {
+			s = q;
+			p->next = q->next;
+			free(s);
+			r = p;
+			p = p->next;
+			if(p != NULL)
+				q = p->next;
+		} else if(r != NULL && p != NULL && r->data == p->data) {
+			s = p;
+			r->next = p->next;
+			free(s);
+			p = r->next;
+			if(p != NULL)
+				q = p->next;
+		} else {
+			r = p;
+			p = p->next;
+			q = p->next;
+		}
+	}
+
+	if(r != NULL && p != NULL && r->data == p->data) {
+		s = p;
+		s = p;
+		r->next = p->next;
+		free(s);
+		p = r->next;
+		if(p != NULL)
+			q = p->next;
+	}
+
+	return head;
+}
+
 int main() {
 /*
     Node* head = NULL;
@@ -1443,7 +1489,7 @@ int main() {
     printList(head);
     // Expected: 1 -> 2 -> 77 -> 3 -> 99 -> 4
 */
-
+/*
     // -------- Case 1: Normal list --------
     Node* head = NULL;
 
@@ -1466,7 +1512,66 @@ int main() {
     empty = destroy(empty);
     printList(empty);
     // Expected: NULL	
+*/
 
+        // -------- Case 1 --------
+    Node* head = NULL;
+
+    // 1 -> 1 -> 2 -> 3 -> 3 -> 3 -> 4 -> 5 -> 5
+    head = insertEnd(head, 1);
+    head = insertEnd(head, 1);
+    head = insertEnd(head, 2);
+    head = insertEnd(head, 3);
+    head = insertEnd(head, 3);
+    head = insertEnd(head, 3);
+    head = insertEnd(head, 4);
+    head = insertEnd(head, 5);
+    head = insertEnd(head, 5);
+
+    printf("Before:\n");
+    printList(head);
+
+    head = removeDuplicates(head);
+
+    printf("After:\n");
+    printList(head);
+    // Expected: 1 -> 2 -> 3 -> 4 -> 5
+
+
+    // -------- Case 2: All same --------
+    Node* same = NULL;
+    same = insertEnd(same, 7);
+    same = insertEnd(same, 7);
+    same = insertEnd(same, 7);
+
+    same = removeDuplicates(same);
+    printList(same);
+    // Expected: 7
+
+
+    // -------- Case 3: No duplicates --------
+    Node* unique = NULL;
+    unique = insertEnd(unique, 1);
+    unique = insertEnd(unique, 2);
+    unique = insertEnd(unique, 3);
+
+    unique = removeDuplicates(unique);
+    printList(unique);
+    // Expected: unchanged
+
+
+    // -------- Case 4: Single node --------
+    Node* single = createNode(10);
+    single = removeDuplicates(single);
+    printList(single);
+    // Expected: 10
+
+
+    // -------- Case 5: Empty --------
+    Node* empty = NULL;
+    empty = removeDuplicates(empty);
+    printList(empty);
+    // Expected: NULL
 
     return 0;
 }
