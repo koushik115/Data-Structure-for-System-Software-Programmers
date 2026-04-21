@@ -633,6 +633,33 @@ Node* removeDuplicates(Node* head) {
 	return head;
 }
 
+// ================= PROBLEM 20 =================
+// Remove duplicates from unsorted linked list
+
+Node* removeDuplicatesUnsorted(Node* head) {
+    // TODO: Write your logic here
+    Node *p = NULL, *q = NULL, *r = NULL;
+
+    if(head == NULL || head->next == NULL) return head;
+
+    p = head;
+    while(p != NULL && p->next != NULL) {
+	    q = p;
+	    while(q != NULL && q->next != NULL) {
+		    if(p->data == q->next->data) {
+			    r = q->next;
+			    q->next = r->next;
+			    free(r);
+		    } else 
+			    q = q->next;
+	    }
+
+	    p = p->next;
+    }
+
+    return head;
+}
+
 int main() {
 /*
     Node* head = NULL;
@@ -1484,7 +1511,7 @@ int main() {
     printList(empty);
     // Expected: NULL	
 */
-
+/*
         // -------- Case 1 --------
     Node* head = NULL;
 
@@ -1543,6 +1570,57 @@ int main() {
     empty = removeDuplicates(empty);
     printList(empty);
     // Expected: NULL
+*/
+    // -------- Case 1 --------
+    Node* head = NULL;
 
+    // 1 -> 3 -> 2 -> 3 -> 4 -> 1 -> 5 -> 2
+    head = insertEnd(head, 1);
+    head = insertEnd(head, 3);
+    head = insertEnd(head, 2);
+    head = insertEnd(head, 3);
+    head = insertEnd(head, 4);
+    head = insertEnd(head, 1);
+    head = insertEnd(head, 5);
+    head = insertEnd(head, 2);
+
+    printf("Before:\n");
+    printList(head);
+
+    head = removeDuplicatesUnsorted(head);
+
+    printf("After:\n");
+    printList(head);
+    // Expected: 1 -> 3 -> 2 -> 4 -> 5
+
+
+    // -------- Case 2: All same --------
+    Node* same = NULL;
+    same = insertEnd(same, 7);
+    same = insertEnd(same, 7);
+    same = insertEnd(same, 7);
+
+    same = removeDuplicatesUnsorted(same);
+    printList(same);
+    // Expected: 7
+
+
+    // -------- Case 3: No duplicates --------
+    Node* unique = NULL;
+    unique = insertEnd(unique, 1);
+    unique = insertEnd(unique, 2);
+    unique = insertEnd(unique, 3);
+
+    unique = removeDuplicatesUnsorted(unique);
+    printList(unique);
+    // Expected: unchanged
+
+
+    // -------- Case 4: Single --------
+    Node* single = createNode(10);
+    single = removeDuplicatesUnsorted(single);
+    printList(single);
+    // Expected: 10
+    	
     return 0;
 }
