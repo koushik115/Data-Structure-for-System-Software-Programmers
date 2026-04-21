@@ -618,45 +618,16 @@ Node* destroy(Node* head) {
 
 // ================= PROBLEM 19 =================
 // Remove duplicates from sorted linked list
-//
 Node* removeDuplicates(Node* head) {
-	// TODO: Write your logic here
-	Node *p = head, *q = NULL, *r = NULL, *s = NULL;
+	Node *p = head, *q = NULL;
 
-	if(p == NULL || p->next == NULL) return head;
-
-	q = p->next;
 	while(p != NULL && p->next != NULL) {
-		if(p != NULL && q != NULL && p->data == q->data) {
-			s = q;
-			p->next = q->next;
-			free(s);
-			r = p;
-			p = p->next;
-			if(p != NULL)
-				q = p->next;
-		} else if(r != NULL && p != NULL && r->data == p->data) {
-			s = p;
-			r->next = p->next;
-			free(s);
-			p = r->next;
-			if(p != NULL)
-				q = p->next;
-		} else {
-			r = p;
-			p = p->next;
+		if(p->data == p->next->data) {
 			q = p->next;
-		}
-	}
-
-	if(r != NULL && p != NULL && r->data == p->data) {
-		s = p;
-		s = p;
-		r->next = p->next;
-		free(s);
-		p = r->next;
-		if(p != NULL)
-			q = p->next;
+			p->next = p->next->next;
+			free(q);
+		} else 
+			p = p->next;
 	}
 
 	return head;
