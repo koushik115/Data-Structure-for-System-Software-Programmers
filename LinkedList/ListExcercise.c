@@ -660,6 +660,52 @@ Node* removeDuplicatesUnsorted(Node* head) {
     return head;
 }
 
+// ================= PROBLEM 21 =================
+// Create intersection list (common elements)
+
+Node* intersectionList(Node* l1, Node* l2) {
+    // TODO: Write your logic here
+    Node *p = NULL, *q = NULL, *r = NULL, *tmp = NULL, *head = NULL;
+    Node *free_p = NULL, *free_q = NULL;
+    if(l1 == NULL || l2 == NULL) return NULL;
+
+    p = l1;
+    while(p != NULL) {
+    	q = l2;
+	while(q != NULL) {
+		if(p->data == q->data) {
+			tmp = (Node *)malloc(sizeof(Node));
+			if(tmp == NULL) {
+				if(head != NULL) {
+					free_p = head;
+					while(free_p != NULL) {
+						free_q = free_p;
+						free_p = free_p->next;
+						free(free_q);
+					}
+
+					return NULL;
+				}
+			}
+
+			tmp->data = p->data;
+			if(head == NULL)
+				head = tmp;
+			if(r != NULL)
+				r->next = tmp;
+			r = tmp;
+			tmp->next = NULL;
+			break;
+		} else
+			q = q->next;
+	}
+
+	p = p->next;
+    }
+
+    return head;
+}
+
 int main() {
 /*
     Node* head = NULL;
@@ -1571,6 +1617,7 @@ int main() {
     printList(empty);
     // Expected: NULL
 */
+/*
     // -------- Case 1 --------
     Node* head = NULL;
 
@@ -1621,6 +1668,68 @@ int main() {
     single = removeDuplicatesUnsorted(single);
     printList(single);
     // Expected: 10
-    	
+*/
+
+        // -------- Case 1 --------
+    Node* l1 = NULL;
+    Node* l2 = NULL;
+
+    // l1: 1 -> 2 -> 3 -> 4 -> 5
+    for(int i = 1; i <= 5; i++)
+        l1 = insertEnd(l1, i);
+
+    // l2: 3 -> 4 -> 5 -> 6 -> 7
+    l2 = insertEnd(l2, 3);
+    l2 = insertEnd(l2, 4);
+    l2 = insertEnd(l2, 5);
+    l2 = insertEnd(l2, 6);
+    l2 = insertEnd(l2, 7);
+
+    printf("L1:\n");
+    printList(l1);
+    printf("L2:\n");
+    printList(l2);
+
+    Node* inter = intersectionList(l1, l2);
+
+    printf("Intersection:\n");
+    printList(inter);
+    // Expected: 3 -> 4 -> 5
+
+
+    // -------- Case 2: No common --------
+    Node* a = NULL;
+    Node* b = NULL;
+
+    a = insertEnd(a, 1);
+    a = insertEnd(a, 2);
+
+    b = insertEnd(b, 3);
+    b = insertEnd(b, 4);
+
+    Node* res = intersectionList(a, b);
+    printList(res);
+    // Expected: NULL
+
+
+    // -------- Case 3: With duplicates --------
+    Node* d1 = NULL;
+    Node* d2 = NULL;
+
+    // d1: 1 -> 2 -> 2 -> 3
+    d1 = insertEnd(d1, 1);
+    d1 = insertEnd(d1, 2);
+    d1 = insertEnd(d1, 2);
+    d1 = insertEnd(d1, 3);
+
+    // d2: 2 -> 2 -> 4
+    d2 = insertEnd(d2, 2);
+    d2 = insertEnd(d2, 2);
+    d2 = insertEnd(d2, 4);
+
+    Node* res2 = intersectionList(d1, d2);
+    printList(res2);
+    // Expected: depends (usually 2 -> 2 OR just 2)	
+
     return 0;
 }
