@@ -785,6 +785,43 @@ Node *unionList(Node *l1, Node *l2) {
   return head;
 }
 
+// ================= PROBLEM 23 =================
+// Split l1 into l2 (negative) and l3 (positive)
+
+void splitList(Node *l1, Node **l2, Node **l3) {
+  // TODO: Write your logic here
+  Node *p = l1, *l2_prev = NULL, *l3_prev = NULL, *next = NULL;
+
+  if (p == NULL)
+    return;
+
+  while (p != NULL) {
+    if (p->data >= 0) {
+      if (*l3 == NULL)
+        *l3 = p;
+      if (l3_prev != NULL)
+        l3_prev->next = p;
+      l3_prev = p;
+    } else {
+      if (*l2 == NULL)
+        *l2 = p;
+      if (l2_prev != NULL)
+        l2_prev->next = p;
+      l2_prev = p;
+    }
+
+    next = p->next;
+    p->next = NULL;
+    p = next;
+  }
+
+  if (l2_prev != NULL)
+    l2_prev->next = NULL;
+
+  if (l3_prev != NULL)
+    l3_prev->next = NULL;
+}
+
 int main() {
   /*
       Node* head = NULL;
@@ -1810,65 +1847,92 @@ int main() {
       printList(res2);
       // Expected: depends (usually 2 -> 2 OR just 2)
   */
+  /*
+    // -------- Case 1 --------
+    Node *l1 = NULL;
+    Node *l2 = NULL;
 
-  // -------- Case 1 --------
+    // l1: 1 -> 2 -> 3 -> 4
+    for (int i = 1; i <= 4; i++)
+      l1 = insertEnd(l1, i);
+
+    // l2: 3 -> 4 -> 5 -> 6
+    l2 = insertEnd(l2, 3);
+    l2 = insertEnd(l2, 4);
+    l2 = insertEnd(l2, 5);
+    l2 = insertEnd(l2, 6);
+
+    printf("L1:\n");
+    printList(l1);
+    printf("L2:\n");
+    printList(l2);
+
+    Node *uni = unionList(l1, l2);
+
+    printf("Union:\n");
+    printList(uni);
+    // Expected: 1 -> 2 -> 3 -> 4 -> 5 -> 6
+
+    // -------- Case 2: No overlap --------
+    Node *a = NULL;
+    Node *b = NULL;
+
+    a = insertEnd(a, 1);
+    a = insertEnd(a, 2);
+
+    b = insertEnd(b, 3);
+    b = insertEnd(b, 4);
+
+    Node *res = unionList(a, b);
+    printList(res);
+    // Expected: 1 -> 2 -> 3 -> 4
+
+    // -------- Case 3: With duplicates --------
+    Node *d1 = NULL;
+    Node *d2 = NULL;
+
+    // d1: 1 -> 2 -> 2 -> 3
+    d1 = insertEnd(d1, 1);
+    d1 = insertEnd(d1, 2);
+    d1 = insertEnd(d1, 2);
+    d1 = insertEnd(d1, 3);
+
+    // d2: 2 -> 3 -> 3 -> 4
+    d2 = insertEnd(d2, 2);
+    d2 = insertEnd(d2, 3);
+    d2 = insertEnd(d2, 3);
+    d2 = insertEnd(d2, 4);
+
+    Node *res2 = unionList(d1, d2);
+    printList(res2);
+    // Expected: 1 -> 2 -> 3 -> 4
+  */
+
   Node *l1 = NULL;
-  Node *l2 = NULL;
 
-  // l1: 1 -> 2 -> 3 -> 4
-  for (int i = 1; i <= 4; i++)
-    l1 = insertEnd(l1, i);
+  // 3 -> -1 -> 5 -> -2 -> 0 -> 4 -> -3
+  l1 = insertEnd(l1, 3);
+  l1 = insertEnd(l1, -1);
+  l1 = insertEnd(l1, 5);
+  l1 = insertEnd(l1, -2);
+  l1 = insertEnd(l1, 0);
+  l1 = insertEnd(l1, 4);
+  l1 = insertEnd(l1, -3);
 
-  // l2: 3 -> 4 -> 5 -> 6
-  l2 = insertEnd(l2, 3);
-  l2 = insertEnd(l2, 4);
-  l2 = insertEnd(l2, 5);
-  l2 = insertEnd(l2, 6);
+  Node *l2 = NULL, *l3 = NULL;
 
-  printf("L1:\n");
+  printf("Original L1:\n");
   printList(l1);
-  printf("L2:\n");
+
+  splitList(l1, &l2, &l3);
+
+  printf("Negative (L2):\n");
   printList(l2);
+  // Expected: -1 -> -2 -> -3
 
-  Node *uni = unionList(l1, l2);
-
-  printf("Union:\n");
-  printList(uni);
-  // Expected: 1 -> 2 -> 3 -> 4 -> 5 -> 6
-
-  // -------- Case 2: No overlap --------
-  Node *a = NULL;
-  Node *b = NULL;
-
-  a = insertEnd(a, 1);
-  a = insertEnd(a, 2);
-
-  b = insertEnd(b, 3);
-  b = insertEnd(b, 4);
-
-  Node *res = unionList(a, b);
-  printList(res);
-  // Expected: 1 -> 2 -> 3 -> 4
-
-  // -------- Case 3: With duplicates --------
-  Node *d1 = NULL;
-  Node *d2 = NULL;
-
-  // d1: 1 -> 2 -> 2 -> 3
-  d1 = insertEnd(d1, 1);
-  d1 = insertEnd(d1, 2);
-  d1 = insertEnd(d1, 2);
-  d1 = insertEnd(d1, 3);
-
-  // d2: 2 -> 3 -> 3 -> 4
-  d2 = insertEnd(d2, 2);
-  d2 = insertEnd(d2, 3);
-  d2 = insertEnd(d2, 3);
-  d2 = insertEnd(d2, 4);
-
-  Node *res2 = unionList(d1, d2);
-  printList(res2);
-  // Expected: 1 -> 2 -> 3 -> 4
+  printf("Positive (L3):\n");
+  printList(l3);
+  // Expected: 3 -> 5 -> 4 (depending on definition, 0 handling)
 
   return 0;
 }
