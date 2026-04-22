@@ -822,6 +822,95 @@ void splitList(Node *l1, Node **l2, Node **l3) {
     l3_prev->next = NULL;
 }
 
+// ================= PROBLEM 24 =================
+// Split into even and odd lists (do NOT modify l1)
+
+void splitEvenOdd(Node *l1, Node **l2, Node **l3) {
+  // TODO: Write your logic here
+  Node *p = NULL, *odd_prev = NULL, *even_prev = NULL, *tmp = NULL;
+  Node *free_p = NULL, *free_q = NULL;
+
+  if (l1 == NULL)
+    return;
+
+  p = l1;
+  while (p != NULL) {
+    if (p->data % 2 == 0) {
+      tmp = (Node *)malloc(sizeof(Node));
+      if (tmp == NULL) {
+        if (*l2 != NULL) {
+          free_p = *l2;
+          while (free_p != NULL) {
+            free_q = free_p;
+            free_p = free_p->next;
+            free(free_q);
+          }
+        }
+
+        if (*l3 != NULL) {
+          free_p = *l3;
+          while (free_p != NULL) {
+            free_q = free_p;
+            free_p = free_p->next;
+            free(free_q);
+          }
+        }
+
+        *l2 = NULL;
+        *l3 = NULL;
+        return;
+      }
+
+      tmp->data = p->data;
+      tmp->next = NULL;
+
+      if (*l2 == NULL)
+        *l2 = even_prev = tmp;
+      else {
+        even_prev->next = tmp;
+        even_prev = tmp;
+      }
+    } else {
+      tmp = (Node *)malloc(sizeof(Node));
+      if (tmp == NULL) {
+        if (*l2 != NULL) {
+          free_p = *l2;
+          while (free_p != NULL) {
+            free_q = free_p;
+            free_p = free_p->next;
+            free(free_q);
+          }
+        }
+
+        if (*l3 != NULL) {
+          free_p = *l3;
+          while (free_p != NULL) {
+            free_q = free_p;
+            free_p = free_p->next;
+            free(free_q);
+          }
+        }
+
+        *l2 = NULL;
+        *l3 = NULL;
+        return;
+      }
+
+      tmp->data = p->data;
+      tmp->next = NULL;
+
+      if (*l3 == NULL)
+        *l3 = odd_prev = tmp;
+      else {
+        odd_prev->next = tmp;
+        odd_prev = tmp;
+      }
+    }
+
+    p = p->next;
+  }
+}
+
 int main() {
   /*
       Node* head = NULL;
@@ -1907,32 +1996,57 @@ int main() {
     printList(res2);
     // Expected: 1 -> 2 -> 3 -> 4
   */
+  /*
+    Node *l1 = NULL;
+
+    // 3 -> -1 -> 5 -> -2 -> 0 -> 4 -> -3
+    l1 = insertEnd(l1, 3);
+    l1 = insertEnd(l1, -1);
+    l1 = insertEnd(l1, 5);
+    l1 = insertEnd(l1, -2);
+    l1 = insertEnd(l1, 0);
+    l1 = insertEnd(l1, 4);
+    l1 = insertEnd(l1, -3);
+
+    Node *l2 = NULL, *l3 = NULL;
+
+    printf("Original L1:\n");
+    printList(l1);
+
+    splitList(l1, &l2, &l3);
+
+    printf("Negative (L2):\n");
+    printList(l2);
+    // Expected: -1 -> -2 -> -3
+
+    printf("Positive (L3):\n");
+    printList(l3);
+    // Expected: 3 -> 5 -> 4 (depending on definition, 0 handling)
+  */
 
   Node *l1 = NULL;
 
-  // 3 -> -1 -> 5 -> -2 -> 0 -> 4 -> -3
-  l1 = insertEnd(l1, 3);
-  l1 = insertEnd(l1, -1);
-  l1 = insertEnd(l1, 5);
-  l1 = insertEnd(l1, -2);
-  l1 = insertEnd(l1, 0);
-  l1 = insertEnd(l1, 4);
-  l1 = insertEnd(l1, -3);
+  // 1 -> 2 -> 3 -> 4 -> 5 -> 6
+  for (int i = 1; i <= 6; i++)
+    l1 = insertEnd(l1, i);
 
   Node *l2 = NULL, *l3 = NULL;
 
   printf("Original L1:\n");
   printList(l1);
 
-  splitList(l1, &l2, &l3);
+  splitEvenOdd(l1, &l2, &l3);
 
-  printf("Negative (L2):\n");
+  printf("Even (L2):\n");
   printList(l2);
-  // Expected: -1 -> -2 -> -3
+  // Expected: 2 -> 4 -> 6
 
-  printf("Positive (L3):\n");
+  printf("Odd (L3):\n");
   printList(l3);
-  // Expected: 3 -> 5 -> 4 (depending on definition, 0 handling)
+  // Expected: 1 -> 3 -> 5
+
+  printf("Original again (should be unchanged):\n");
+  printList(l1);
 
   return 0;
 }
