@@ -11,7 +11,8 @@ typedef struct {
 
 typedef struct {
 	int queue[QUEUE_MAX_SIZE];
-	int size;
+	int top;
+	int rear;
 } Queue;
 
 // Initialize stack
