@@ -911,6 +911,28 @@ void splitEvenOdd(Node *l1, Node **l2, Node **l3) {
   }
 }
 
+// ================= PROBLEM 27 =================
+// Get nth node from end
+
+Node* getNthFromEnd(Node* head, int n) {
+    // TODO: Write your logic here
+    Node *p = NULL, *q = NULL;
+
+    p = q = head;
+
+    while(p != NULL && n-- > 0)
+	    p = p->next;
+
+    if(n > 0) return NULL;
+
+    while(p != NULL) {
+	    p = p->next;
+	    q = q->next;
+    }
+
+    return q;
+}
+
 // ================= PROBLEM 26 =================
 // Delete alternate (even-positioned) nodes
 
@@ -2182,7 +2204,7 @@ int main() {
   printf("Original again (should be unchanged):\n");
   printList(l1);
 */
-
+/*
 	     // -------- Case 1 --------
     Node* head = NULL;
 
@@ -2222,6 +2244,29 @@ int main() {
     empty = deleteAlternate(empty);
     printList(empty);
     // Expected: NULL 
+*/
+
+    Node* head = NULL;
+
+    // 1 -> 2 -> 3 -> 4 -> 5
+    for(int i = 1; i <= 5; i++)
+        head = insertEnd(head, i);
+
+    printList(head);
+
+    Node* res;
+
+    res = getNthFromEnd(head, 1);
+    printf("1st from end: %d\n", res ? res->data : -1); // 5
+
+    res = getNthFromEnd(head, 2);
+    printf("2nd from end: %d\n", res ? res->data : -1); // 4
+
+    res = getNthFromEnd(head, 5);
+    printf("5th from end: %d\n", res ? res->data : -1); // 1
+
+    res = getNthFromEnd(head, 6);
+    printf("Out of range: %p\n", res); // NULL
 
   return 0;
 }
