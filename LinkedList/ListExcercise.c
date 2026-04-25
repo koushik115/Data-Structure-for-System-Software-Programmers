@@ -911,6 +911,26 @@ void splitEvenOdd(Node *l1, Node **l2, Node **l3) {
   }
 }
 
+// ================= PROBLEM 26 =================
+// Delete alternate (even-positioned) nodes
+
+Node* deleteAlternate(Node* head) {
+    // TODO: Write your logic here
+    Node *p = NULL, *q = NULL;
+
+    if(head == NULL || head->next == NULL) return head;
+
+    p = head;
+    while(p != NULL && p->next != NULL) {
+	    q = p->next;
+	    p->next = q->next;
+	    free(q);
+	    p = p->next;
+    }
+
+    return head;
+}
+
 int main() {
   /*
       Node* head = NULL;
@@ -1544,7 +1564,121 @@ int main() {
       l1 = insertEnd(l1, 7);
       l1 = insertEnd(l1, 8);
 
-      printf("Positions (L1):\n");
+      printf("Positio    // -------- Case 1 --------
+    Node* head = NULL;
+
+    // 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
+    for(int i = 1; i <= 7; i++)
+        head = insertEnd(head, i);
+
+    printf("Original:\n");
+    printList(head);
+    // -------- Case 1 --------
+    Node* head = NULL;
+
+    // 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
+    for(int i = 1; i <= 7; i++)
+        head = insertEnd(head, i);
+
+    printf("Original:\n");
+    printList(head);
+
+    head = deleteAlternate(head);
+
+    printf("After:\n");
+    printList(head);
+    // Expected: 1 -> 3 -> 5 -> 7
+
+
+    // -------- Case 2: Even count --------
+    Node* even = NULL;
+    for(int i = 1; i <= 6; i++)
+        even = insertEnd(even, i);
+
+    even = deleteAlternate(even);
+    printList(even);
+    // Expected: 1 -> 3 -> 5
+
+
+    // -------- Case 3: Single --------
+    Node* single = createNode(10);
+    single = deleteAlternate(single);
+    printList(single);
+    // Expected: 10
+
+
+    // -------- Case 4: Empty --------
+    Node* empty = NULL;
+    empty = deleteAlternate(empty);
+    printList(empty);
+    // Expected: NULL    // -------- Case 1 --------
+    Node* head = NULL;
+
+    // 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
+    for(int i = 1; i <= 7; i++)
+        head = insertEnd(head, i);
+
+    printf("Original:\n");
+    printList(head);
+
+    head = deleteAlternate(head);
+
+    printf("After:\n");
+    printList(head);
+    // Expected: 1 -> 3 -> 5 -> 7
+
+
+    // -------- Case 2: Even count --------
+    Node* even = NULL;
+    for(int i = 1; i <= 6; i++)
+        even = insertEnd(even, i);
+
+    even = deleteAlternate(even);
+    printList(even);
+    // Expected: 1 -> 3 -> 5
+
+
+    // -------- Case 3: Single --------
+    Node* single = createNode(10);
+    single = deleteAlternate(single);
+    printList(single);
+    // Expected: 10
+
+
+    // -------- Case 4: Empty --------
+    Node* empty = NULL;
+    empty = deleteAlternate(empty);
+    printList(empty);
+    // Expected: NULL
+    head = deleteAlternate(head);
+
+    printf("After:\n");
+    printList(head);
+    // Expected: 1 -> 3 -> 5 -> 7
+
+
+    // -------- Case 2: Even count --------
+    Node* even = NULL;
+    for(int i = 1; i <= 6; i++)
+        even = insertEnd(even, i);
+
+    even = deleteAlternate(even);
+    printList(even);
+    // Expected: 1 -> 3 -> 5
+
+
+    // -------- Case 3: Single --------
+    Node* single = createNode(10);
+    single = deleteAlternate(single);
+    printList(single);
+    // Expected: 10
+
+
+    // -------- Case 4: Empty --------
+    Node* empty = NULL;
+    empty = deleteAlternate(empty);
+    printList(empty);
+    // Expected: NULLns (L1):\n");
       printList(l1);
 
       printf("Output:\n");
@@ -2023,7 +2157,7 @@ int main() {
     printList(l3);
     // Expected: 3 -> 5 -> 4 (depending on definition, 0 handling)
   */
-
+/*
   Node *l1 = NULL;
 
   // 1 -> 2 -> 3 -> 4 -> 5 -> 6
@@ -2047,6 +2181,47 @@ int main() {
 
   printf("Original again (should be unchanged):\n");
   printList(l1);
+*/
+
+	     // -------- Case 1 --------
+    Node* head = NULL;
+
+    // 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
+    for(int i = 1; i <= 7; i++)
+        head = insertEnd(head, i);
+
+    printf("Original:\n");
+    printList(head);
+
+    head = deleteAlternate(head);
+
+    printf("After:\n");
+    printList(head);
+    // Expected: 1 -> 3 -> 5 -> 7
+
+
+    // -------- Case 2: Even count --------
+    Node* even = NULL;
+    for(int i = 1; i <= 6; i++)
+        even = insertEnd(even, i);
+
+    even = deleteAlternate(even);
+    printList(even);
+    // Expected: 1 -> 3 -> 5
+
+
+    // -------- Case 3: Single --------
+    Node* single = createNode(10);
+    single = deleteAlternate(single);
+    printList(single);
+    // Expected: 10
+
+
+    // -------- Case 4: Empty --------
+    Node* empty = NULL;
+    empty = deleteAlternate(empty);
+    printList(empty);
+    // Expected: NULL 
 
   return 0;
 }
