@@ -914,43 +914,45 @@ void splitEvenOdd(Node *l1, Node **l2, Node **l3) {
 // ================= PROBLEM 27 =================
 // Get nth node from end
 
-Node* getNthFromEnd(Node* head, int n) {
-    // TODO: Write your logic here
-    Node *p = NULL, *q = NULL;
+Node *getNthFromEnd(Node *head, int n) {
+  // TODO: Write your logic here
+  Node *p = NULL, *q = NULL;
 
-    p = q = head;
+  p = q = head;
 
-    while(p != NULL && n-- > 0)
-	    p = p->next;
+  while (p != NULL && n-- > 0)
+    p = p->next;
 
-    if(n > 0) return NULL;
+  if (n > 0)
+    return NULL;
 
-    while(p != NULL) {
-	    p = p->next;
-	    q = q->next;
-    }
+  while (p != NULL) {
+    p = p->next;
+    q = q->next;
+  }
 
-    return q;
+  return q;
 }
 
 // ================= PROBLEM 26 =================
 // Delete alternate (even-positioned) nodes
 
-Node* deleteAlternate(Node* head) {
-    // TODO: Write your logic here
-    Node *p = NULL, *q = NULL;
+Node *deleteAlternate(Node *head) {
+  // TODO: Write your logic here
+  Node *p = NULL, *q = NULL;
 
-    if(head == NULL || head->next == NULL) return head;
-
-    p = head;
-    while(p != NULL && p->next != NULL) {
-	    q = p->next;
-	    p->next = q->next;
-	    free(q);
-	    p = p->next;
-    }
-
+  if (head == NULL || head->next == NULL)
     return head;
+
+  p = head;
+  while (p != NULL && p->next != NULL) {
+    q = p->next;
+    p->next = q->next;
+    free(q);
+    p = p->next;
+  }
+
+  return head;
 }
 
 int main() {
@@ -2179,94 +2181,94 @@ int main() {
     printList(l3);
     // Expected: 3 -> 5 -> 4 (depending on definition, 0 handling)
   */
-/*
-  Node *l1 = NULL;
+  /*
+    Node *l1 = NULL;
 
-  // 1 -> 2 -> 3 -> 4 -> 5 -> 6
-  for (int i = 1; i <= 6; i++)
-    l1 = insertEnd(l1, i);
+    // 1 -> 2 -> 3 -> 4 -> 5 -> 6
+    for (int i = 1; i <= 6; i++)
+      l1 = insertEnd(l1, i);
 
-  Node *l2 = NULL, *l3 = NULL;
+    Node *l2 = NULL, *l3 = NULL;
 
-  printf("Original L1:\n");
-  printList(l1);
+    printf("Original L1:\n");
+    printList(l1);
 
-  splitEvenOdd(l1, &l2, &l3);
+    splitEvenOdd(l1, &l2, &l3);
 
-  printf("Even (L2):\n");
-  printList(l2);
-  // Expected: 2 -> 4 -> 6
+    printf("Even (L2):\n");
+    printList(l2);
+    // Expected: 2 -> 4 -> 6
 
-  printf("Odd (L3):\n");
-  printList(l3);
-  // Expected: 1 -> 3 -> 5
-
-  printf("Original again (should be unchanged):\n");
-  printList(l1);
-*/
-/*
-	     // -------- Case 1 --------
-    Node* head = NULL;
-
-    // 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
-    for(int i = 1; i <= 7; i++)
-        head = insertEnd(head, i);
-
-    printf("Original:\n");
-    printList(head);
-
-    head = deleteAlternate(head);
-
-    printf("After:\n");
-    printList(head);
-    // Expected: 1 -> 3 -> 5 -> 7
-
-
-    // -------- Case 2: Even count --------
-    Node* even = NULL;
-    for(int i = 1; i <= 6; i++)
-        even = insertEnd(even, i);
-
-    even = deleteAlternate(even);
-    printList(even);
+    printf("Odd (L3):\n");
+    printList(l3);
     // Expected: 1 -> 3 -> 5
 
+    printf("Original again (should be unchanged):\n");
+    printList(l1);
+  */
+  /*
+               // -------- Case 1 --------
+      Node* head = NULL;
 
-    // -------- Case 3: Single --------
-    Node* single = createNode(10);
-    single = deleteAlternate(single);
-    printList(single);
-    // Expected: 10
+      // 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
+      for(int i = 1; i <= 7; i++)
+          head = insertEnd(head, i);
+
+      printf("Original:\n");
+      printList(head);
+
+      head = deleteAlternate(head);
+
+      printf("After:\n");
+      printList(head);
+      // Expected: 1 -> 3 -> 5 -> 7
 
 
-    // -------- Case 4: Empty --------
-    Node* empty = NULL;
-    empty = deleteAlternate(empty);
-    printList(empty);
-    // Expected: NULL 
-*/
+      // -------- Case 2: Even count --------
+      Node* even = NULL;
+      for(int i = 1; i <= 6; i++)
+          even = insertEnd(even, i);
 
-    Node* head = NULL;
+      even = deleteAlternate(even);
+      printList(even);
+      // Expected: 1 -> 3 -> 5
 
-    // 1 -> 2 -> 3 -> 4 -> 5
-    for(int i = 1; i <= 5; i++)
-        head = insertEnd(head, i);
 
-    printList(head);
+      // -------- Case 3: Single --------
+      Node* single = createNode(10);
+      single = deleteAlternate(single);
+      printList(single);
+      // Expected: 10
 
-    Node* res;
 
-    res = getNthFromEnd(head, 1);
-    printf("1st from end: %d\n", res ? res->data : -1); // 5
+      // -------- Case 4: Empty --------
+      Node* empty = NULL;
+      empty = deleteAlternate(empty);
+      printList(empty);
+      // Expected: NULL
+  */
 
-    res = getNthFromEnd(head, 2);
-    printf("2nd from end: %d\n", res ? res->data : -1); // 4
+  Node *head = NULL;
 
-    res = getNthFromEnd(head, 5);
-    printf("5th from end: %d\n", res ? res->data : -1); // 1
+  // 1 -> 2 -> 3 -> 4 -> 5
+  for (int i = 1; i <= 5; i++)
+    head = insertEnd(head, i);
 
-    res = getNthFromEnd(head, 6);
-    printf("Out of range: %p\n", res); // NULL
+  printList(head);
+
+  Node *res;
+
+  res = getNthFromEnd(head, 1);
+  printf("1st from end: %d\n", res ? res->data : -1); // 5
+
+  res = getNthFromEnd(head, 2);
+  printf("2nd from end: %d\n", res ? res->data : -1); // 4
+
+  res = getNthFromEnd(head, 5);
+  printf("5th from end: %d\n", res ? res->data : -1); // 1
+
+  res = getNthFromEnd(head, 6);
+  printf("Out of range: %p\n", res); // NULL
 
   return 0;
 }
