@@ -955,6 +955,138 @@ Node *deleteAlternate(Node *head) {
   return head;
 }
 
+// ================= PROBLEM 28 =================
+
+// 1. Detect cycle
+int hasCycle(Node* head) {
+	Node *p = NULL, *q = NULL;
+
+	if(head == NULL) return 0;
+
+	p = q = head;
+	while(p != NULL && p->next != NULL) {
+		p = p->next->next;
+		q = q->next;
+		
+		if(p == q) return 1;
+	}
+
+	return 0;
+}
+
+// 2. Find cycle length
+int cycleLength(Node* head) {
+	Node *p = NULL, *q = NULL;
+        int count = 0;
+
+	if(head == NULL) return 0;
+
+	p = q = head;
+	while(p != NULL && p->next != NULL) {
+		p = p->next->next;
+		q = q->next;
+		
+		if(p == q) break;
+	}
+
+	if(p == q) {
+		do {
+			p = p->next;
+			count++;
+		} while (p != q);
+	}
+
+	return count;
+}
+
+// 3. Find start of cycle
+Node* findCycleStart(Node* head) {
+	Node *p = NULL, *q = NULL;
+        int count = 0;
+
+	if(head == NULL) return NULL;
+
+	p = q = head;
+	while(p != NULL && p->next != NULL) {
+		p = p->next->next;
+		q = q->next;
+		
+		if(p == q) break;
+	}
+
+	if(p != q) return NULL;
+	q = head;
+	while(p != q) {
+		p = p->next;
+		q = q->next;
+	}
+
+	return p;
+}
+
+// 4. Find total length (handle cycle)
+int listLength(Node* head) {
+	Node *p = NULL, *q = NULL;
+	int count = 0;
+
+	if(head == NULL) return 0;
+
+	p = q = head;
+	while(p != NULL && p->next != NULL) {
+		p = p->next->next;
+		q = q->next;
+		if(p == q) {
+			count = 0;
+			break;
+		}
+	}
+
+	if(p == q) {
+		do {
+			p = p->next;
+			count++;
+		} while(p != q);
+
+		q = head;
+		while(p != q) {
+			p = p->next;
+			q = q->next;
+			count++;
+		}
+	}
+
+	return count;
+}
+
+// 5. Remove cycle
+void removeCycle(Node* head) {
+	Node *p = NULL, *q = NULL;
+
+	if(head == NULL) return;
+
+	p = q = head;
+	while(p != NULL && p->next != NULL) {
+		p = p->next->next;
+		q = q->next;
+
+		if(p == q) break;
+	}
+
+	if(p == q) {
+		q = head;
+		while (p != q) {
+			p = p->next;
+			q = q->next;
+		};
+
+		do {
+			p = p->next;
+		} while (p->next != q);
+
+		p->next = NULL;
+	}
+}
+
 int main() {
   /*
       Node* head = NULL;
@@ -1294,6 +1426,38 @@ int main() {
 
       printf("Empty list:\n");
       printList(empty);
+    Node* head = NULL;
+
+    // 1 -> 2 -> 3 -> 4 -> 5 -> 6
+    for(int i = 1; i <= 6; i++)
+        head = insertEnd(head, i);
+
+    // create cycle: 6 -> 3
+    Node* p = head;
+    Node* join = NULL;
+    int count = 1;
+
+    while(p->next != NULL) {
+        if(count == 3) join = p;
+        p = p->next;
+        count++;
+    }
+
+    p->next = join;  // cycle created
+
+    printf("Has cycle: %d\n", hasCycle(head));
+    printf("Cycle length: %d\n", cycleLength(head));
+
+    Node* start = findCycleStart(head);
+    if(start)
+        printf("Cycle starts at: %d\n", start->data);
+
+    printf("Total length: %d\n", listLength(head));
+
+    removeCycle(head);
+
+    printf("After removing cycle:\n");
+    printList(head);  // should print normally
       // Expected: NULL
   */
   /*
@@ -1303,6 +1467,38 @@ int main() {
       // 1 <-> 2 <-> 3 <-> 4 <-> 5 <-> 6
       for (int i = 1; i <= 6; i++)
           head = insertEndD(head, i);
+    Node* head = NULL;
+
+    // 1 -> 2 -> 3 -> 4 -> 5 -> 6
+    for(int i = 1; i <= 6; i++)
+        head = insertEnd(head, i);
+
+    // create cycle: 6 -> 3
+    Node* p = head;
+    Node* join = NULL;
+    int count = 1;
+
+    while(p->next != NULL) {
+        if(count == 3) join = p;
+        p = p->next;
+        count++;
+    }
+
+    p->next = join;  // cycle created
+
+    printf("Has cycle: %d\n", hasCycle(head));
+    printf("Cycle length: %d\n", cycleLength(head));
+
+    Node* start = findCycleStart(head);
+    if(start)
+        printf("Cycle starts at: %d\n", start->data);
+
+    printf("Total length: %d\n", listLength(head));
+
+    removeCycle(head);
+
+    printf("After removing cycle:\n");
+    printList(head);  // should print normally
 
       printf("Original DLL:\n");
       printDList(head);
@@ -2247,7 +2443,7 @@ int main() {
       printList(empty);
       // Expected: NULL
   */
-
+/*
   Node *head = NULL;
 
   // 1 -> 2 -> 3 -> 4 -> 5
@@ -2269,6 +2465,41 @@ int main() {
 
   res = getNthFromEnd(head, 6);
   printf("Out of range: %p\n", res); // NULL
+*/
 
+    Node* head = NULL;
+
+    // 1 -> 2 -> 3 -> 4 -> 5 -> 6
+    for(int i = 1; i <= 6; i++)
+        head = insertEnd(head, i);
+
+    // create cycle: 6 -> 3
+    Node* p = head;
+    Node* join = NULL;
+    int count = 1;
+
+    while(p->next != NULL) {
+        if(count == 3) join = p;
+        p = p->next;
+        count++;
+    }
+
+    p->next = join;  // cycle created
+
+    printf("Has cycle: %d\n", hasCycle(head));
+    
+    printf("Cycle length: %d\n", cycleLength(head));
+
+    Node* start = findCycleStart(head);
+    if(start)
+        printf("Cycle starts at: %d\n", start->data);
+
+    printf("Total length: %d\n", listLength(head));
+
+    removeCycle(head);
+
+    printf("After removing cycle:\n");
+    printList(head);  // should print normally
+	  
   return 0;
 }
