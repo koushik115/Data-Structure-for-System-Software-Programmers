@@ -1119,11 +1119,6 @@ void splitList(Node* head, Node** first, Node** second) {
 	    *first = head;
 	    *second = NULL;
 	    return;
-    } else if(head->next->next == NULL) {
-	    *first = head;
-	    *second = head->next;
-	    (*first)->next = NULL;
-	    return;
     }
 
     *first = p = q = head;
@@ -1137,6 +1132,35 @@ void splitList(Node* head, Node** first, Node** second) {
 
 }
 
+// ================= PROBLEM 31 =================
+// Split list at given data value
+
+void splitAtValue(Node* head, int key, Node** first, Node** second) {
+    // TODO: Write your logic here
+    Node *p = NULL;
+
+    if(head == NULL) {
+	    *first = *second = NULL;
+	    return;
+    } else if(head->next == NULL) {
+	    *first = head;
+	    *second = NULL;
+	    return;
+    }
+
+    *first = p = head;
+    while(p != NULL) {
+	    if(p->data == key) {
+		    *second = p->next;
+		    p->next = NULL;
+		    return;
+	    }
+
+	    p = p->next;
+    }
+
+    *second = NULL;
+}
 
 int main() {
   /*
@@ -2572,7 +2596,7 @@ int main() {
     printf("Middle (even): %d\n", mid ? mid->data : -1);
     // Decide: 3 or 4 (both acceptable, just be consistent)
 */
-
+/*
     Node* head = NULL;
 
     // 1 -> 2 -> 3 -> 4 -> 5
@@ -2588,6 +2612,20 @@ int main() {
 
     printf("Second half:\n");
     printList(l2);  // 4 -> 5
+*/
+
+    Node* head = NULL;
+
+    // 1 -> 2 -> 3 -> 4 -> 5 -> 6
+    for(int i = 1; i <= 6; i++)
+        head = insertEnd(head, i);
+
+    Node *l1 = NULL, *l2 = NULL;
+
+    splitAtValue(head, 3, &l1, &l2);
+
+    printList(l1);  // 1 -> 2 -> 3
+    printList(l2);  // 4 -> 5 -> 6
 
   return 0;
 }
