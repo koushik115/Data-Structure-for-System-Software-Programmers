@@ -787,7 +787,7 @@ Node *unionList(Node *l1, Node *l2) {
 
 // ================= PROBLEM 23 =================
 // Split l1 into l2 (negative) and l3 (positive)
-
+/*
 void splitList(Node *l1, Node **l2, Node **l3) {
   // TODO: Write your logic here
   Node *p = l1, *l2_prev = NULL, *l3_prev = NULL, *next = NULL;
@@ -821,7 +821,7 @@ void splitList(Node *l1, Node **l2, Node **l3) {
   if (l3_prev != NULL)
     l3_prev->next = NULL;
 }
-
+*/
 // ================= PROBLEM 24 =================
 // Split into even and odd lists (do NOT modify l1)
 
@@ -1086,6 +1086,57 @@ void removeCycle(Node* head) {
 		p->next = NULL;
 	}
 }
+
+// ================= PROBLEM 29 =================
+// Find middle node of singly linked list
+
+Node* findMiddle(Node* head) {
+    // TODO: Write your logic here
+    Node *p = NULL, *q = NULL;
+
+    if(head == NULL) return head;
+
+    p = q = head;
+    while(p != NULL && p->next != NULL) {
+	    p = p->next->next;
+	    q = q->next;
+    }
+
+    return q;
+}
+
+// ================= PROBLEM 30 =================
+// Split list into two halves
+
+void splitList(Node* head, Node** first, Node** second) {
+    // TODO: Write your logic here
+    Node *p = NULL, *q = NULL;
+    if(head == NULL) {
+	    *first = *second = NULL;
+	    return;
+    }
+    else if(head->next == NULL) {
+	    *first = head;
+	    *second = NULL;
+	    return;
+    } else if(head->next->next == NULL) {
+	    *first = head;
+	    *second = head->next;
+	    (*first)->next = NULL;
+	    return;
+    }
+
+    *first = p = q = head;
+    while(p != NULL && p->next != NULL) {
+	    p = p->next->next;
+	    q = q->next;
+    }
+	
+    *second = q->next;
+    q->next = NULL;
+
+}
+
 
 int main() {
   /*
@@ -2466,7 +2517,7 @@ int main() {
   res = getNthFromEnd(head, 6);
   printf("Out of range: %p\n", res); // NULL
 */
-
+/*
     Node* head = NULL;
 
     // 1 -> 2 -> 3 -> 4 -> 5 -> 6
@@ -2500,6 +2551,43 @@ int main() {
 
     printf("After removing cycle:\n");
     printList(head);  // should print normally
-	  
+	  */
+/*
+    Node* head = NULL;
+
+    // 1 -> 2 -> 3 -> 4 -> 5
+    for(int i = 1; i <= 5; i++)
+        head = insertEnd(head, i);
+
+    Node* mid = findMiddle(head);
+    printf("Middle: %d\n", mid ? mid->data : -1); // 3
+
+
+    // Even case
+    Node* even = NULL;
+    for(int i = 1; i <= 6; i++)
+        even = insertEnd(even, i);
+
+    mid = findMiddle(even);
+    printf("Middle (even): %d\n", mid ? mid->data : -1);
+    // Decide: 3 or 4 (both acceptable, just be consistent)
+*/
+
+    Node* head = NULL;
+
+    // 1 -> 2 -> 3 -> 4 -> 5
+    for(int i = 1; i <= 5; i++)
+        head = insertEnd(head, i);
+
+    Node *l1 = NULL, *l2 = NULL;
+
+    splitList(head, &l1, &l2);
+
+    printf("First half:\n");
+    printList(l1);  // 1 -> 2 -> 3
+
+    printf("Second half:\n");
+    printList(l2);  // 4 -> 5
+
   return 0;
 }
