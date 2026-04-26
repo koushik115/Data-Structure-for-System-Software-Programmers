@@ -1162,6 +1162,29 @@ void splitAtValue(Node* head, int key, Node** first, Node** second) {
     *second = NULL;
 }
 
+// ================= PROBLEM 32 =================
+// Move alternate nodes to a new list
+
+void splitAlternate(Node* head, Node** second) {
+    // TODO: Write your logic here
+    Node *p = NULL, *q = NULL, *r = NULL;
+    *second = NULL;
+    if(head == NULL || head->next == NULL) return;
+
+    p = head;
+    while(p != NULL && p->next != NULL) {
+	    q = p->next;
+	    if(*second == NULL) *second = q;
+	    p->next = q->next;
+	    q->next = NULL;
+	    p = p->next;
+	    if(r != NULL)
+		    r->next = q;
+	    r = q;
+    }
+
+}
+
 int main() {
   /*
       Node* head = NULL;
@@ -2613,7 +2636,7 @@ int main() {
     printf("Second half:\n");
     printList(l2);  // 4 -> 5
 */
-
+/*
     Node* head = NULL;
 
     // 1 -> 2 -> 3 -> 4 -> 5 -> 6
@@ -2626,6 +2649,23 @@ int main() {
 
     printList(l1);  // 1 -> 2 -> 3
     printList(l2);  // 4 -> 5 -> 6
+*/
+
+    Node* head = NULL;
+
+    // 1 -> 2 -> 3 -> 4 -> 5 -> 6
+    for(int i = 1; i <= 6; i++)
+        head = insertEnd(head, i);
+
+    Node* second = NULL;
+
+    splitAlternate(head, &second);
+
+    printf("Odd list:\n");
+    printList(head);    // 1 -> 3 -> 5
+
+    printf("Even list:\n");
+    printList(second);  // 2 -> 4 -> 6
 
   return 0;
 }
