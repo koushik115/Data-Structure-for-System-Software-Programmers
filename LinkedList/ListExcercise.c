@@ -958,231 +958,241 @@ Node *deleteAlternate(Node *head) {
 // ================= PROBLEM 28 =================
 
 // 1. Detect cycle
-int hasCycle(Node* head) {
-	Node *p = NULL, *q = NULL;
+int hasCycle(Node *head) {
+  Node *p = NULL, *q = NULL;
 
-	if(head == NULL) return 0;
+  if (head == NULL)
+    return 0;
 
-	p = q = head;
-	while(p != NULL && p->next != NULL) {
-		p = p->next->next;
-		q = q->next;
-		
-		if(p == q) return 1;
-	}
+  p = q = head;
+  while (p != NULL && p->next != NULL) {
+    p = p->next->next;
+    q = q->next;
 
-	return 0;
+    if (p == q)
+      return 1;
+  }
+
+  return 0;
 }
 
 // 2. Find cycle length
-int cycleLength(Node* head) {
-	Node *p = NULL, *q = NULL;
-        int count = 0;
+int cycleLength(Node *head) {
+  Node *p = NULL, *q = NULL;
+  int count = 0;
 
-	if(head == NULL) return 0;
+  if (head == NULL)
+    return 0;
 
-	p = q = head;
-	while(p != NULL && p->next != NULL) {
-		p = p->next->next;
-		q = q->next;
-		
-		if(p == q) break;
-	}
+  p = q = head;
+  while (p != NULL && p->next != NULL) {
+    p = p->next->next;
+    q = q->next;
 
-	if(p == q) {
-		do {
-			p = p->next;
-			count++;
-		} while (p != q);
-	}
+    if (p == q)
+      break;
+  }
 
-	return count;
+  if (p == q) {
+    do {
+      p = p->next;
+      count++;
+    } while (p != q);
+  }
+
+  return count;
 }
 
 // 3. Find start of cycle
-Node* findCycleStart(Node* head) {
-	Node *p = NULL, *q = NULL;
-        int count = 0;
+Node *findCycleStart(Node *head) {
+  Node *p = NULL, *q = NULL;
+  int count = 0;
 
-	if(head == NULL) return NULL;
+  if (head == NULL)
+    return NULL;
 
-	p = q = head;
-	while(p != NULL && p->next != NULL) {
-		p = p->next->next;
-		q = q->next;
-		
-		if(p == q) break;
-	}
+  p = q = head;
+  while (p != NULL && p->next != NULL) {
+    p = p->next->next;
+    q = q->next;
 
-	if(p != q) return NULL;
-	q = head;
-	while(p != q) {
-		p = p->next;
-		q = q->next;
-	}
+    if (p == q)
+      break;
+  }
 
-	return p;
+  if (p != q)
+    return NULL;
+  q = head;
+  while (p != q) {
+    p = p->next;
+    q = q->next;
+  }
+
+  return p;
 }
 
 // 4. Find total length (handle cycle)
-int listLength(Node* head) {
-	Node *p = NULL, *q = NULL;
-	int count = 0;
+int listLength(Node *head) {
+  Node *p = NULL, *q = NULL;
+  int count = 0;
 
-	if(head == NULL) return 0;
+  if (head == NULL)
+    return 0;
 
-	p = q = head;
-	while(p != NULL && p->next != NULL) {
-		p = p->next->next;
-		q = q->next;
-		if(p == q) {
-			count = 0;
-			break;
-		}
-	}
+  p = q = head;
+  while (p != NULL && p->next != NULL) {
+    p = p->next->next;
+    q = q->next;
+    if (p == q) {
+      count = 0;
+      break;
+    }
+  }
 
-	if(p == q) {
-		do {
-			p = p->next;
-			count++;
-		} while(p != q);
+  if (p == q) {
+    do {
+      p = p->next;
+      count++;
+    } while (p != q);
 
-		q = head;
-		while(p != q) {
-			p = p->next;
-			q = q->next;
-			count++;
-		}
-	}
+    q = head;
+    while (p != q) {
+      p = p->next;
+      q = q->next;
+      count++;
+    }
+  }
 
-	return count;
+  return count;
 }
 
 // 5. Remove cycle
-void removeCycle(Node* head) {
-	Node *p = NULL, *q = NULL;
+void removeCycle(Node *head) {
+  Node *p = NULL, *q = NULL;
 
-	if(head == NULL) return;
+  if (head == NULL)
+    return;
 
-	p = q = head;
-	while(p != NULL && p->next != NULL) {
-		p = p->next->next;
-		q = q->next;
+  p = q = head;
+  while (p != NULL && p->next != NULL) {
+    p = p->next->next;
+    q = q->next;
 
-		if(p == q) break;
-	}
+    if (p == q)
+      break;
+  }
 
-	if(p == q) {
-		q = head;
-		while (p != q) {
-			p = p->next;
-			q = q->next;
-		};
+  if (p == q) {
+    q = head;
+    while (p != q) {
+      p = p->next;
+      q = q->next;
+    };
 
-		do {
-			p = p->next;
-		} while (p->next != q);
+    do {
+      p = p->next;
+    } while (p->next != q);
 
-		p->next = NULL;
-	}
+    p->next = NULL;
+  }
 }
 
 // ================= PROBLEM 29 =================
 // Find middle node of singly linked list
 
-Node* findMiddle(Node* head) {
-    // TODO: Write your logic here
-    Node *p = NULL, *q = NULL;
+Node *findMiddle(Node *head) {
+  // TODO: Write your logic here
+  Node *p = NULL, *q = NULL;
 
-    if(head == NULL) return head;
+  if (head == NULL)
+    return head;
 
-    p = q = head;
-    while(p != NULL && p->next != NULL) {
-	    p = p->next->next;
-	    q = q->next;
-    }
+  p = q = head;
+  while (p != NULL && p->next != NULL) {
+    p = p->next->next;
+    q = q->next;
+  }
 
-    return q;
+  return q;
 }
 
 // ================= PROBLEM 30 =================
 // Split list into two halves
 
-void splitList(Node* head, Node** first, Node** second) {
-    // TODO: Write your logic here
-    Node *p = NULL, *q = NULL;
-    if(head == NULL) {
-	    *first = *second = NULL;
-	    return;
-    }
-    else if(head->next == NULL) {
-	    *first = head;
-	    *second = NULL;
-	    return;
-    }
+void splitList(Node *head, Node **first, Node **second) {
+  // TODO: Write your logic here
+  Node *p = NULL, *q = NULL;
+  if (head == NULL) {
+    *first = *second = NULL;
+    return;
+  } else if (head->next == NULL) {
+    *first = head;
+    *second = NULL;
+    return;
+  }
 
-    *first = p = q = head;
-    while(p != NULL && p->next != NULL) {
-	    p = p->next->next;
-	    q = q->next;
-    }
-	
-    *second = q->next;
-    q->next = NULL;
+  *first = p = q = head;
+  while (p != NULL && p->next != NULL) {
+    p = p->next->next;
+    q = q->next;
+  }
 
+  *second = q->next;
+  q->next = NULL;
 }
 
 // ================= PROBLEM 31 =================
 // Split list at given data value
 
-void splitAtValue(Node* head, int key, Node** first, Node** second) {
-    // TODO: Write your logic here
-    Node *p = NULL;
+void splitAtValue(Node *head, int key, Node **first, Node **second) {
+  // TODO: Write your logic here
+  Node *p = NULL;
 
-    if(head == NULL) {
-	    *first = *second = NULL;
-	    return;
-    } else if(head->next == NULL) {
-	    *first = head;
-	    *second = NULL;
-	    return;
-    }
-
-    *first = p = head;
-    while(p != NULL) {
-	    if(p->data == key) {
-		    *second = p->next;
-		    p->next = NULL;
-		    return;
-	    }
-
-	    p = p->next;
-    }
-
+  if (head == NULL) {
+    *first = *second = NULL;
+    return;
+  } else if (head->next == NULL) {
+    *first = head;
     *second = NULL;
+    return;
+  }
+
+  *first = p = head;
+  while (p != NULL) {
+    if (p->data == key) {
+      *second = p->next;
+      p->next = NULL;
+      return;
+    }
+
+    p = p->next;
+  }
+
+  *second = NULL;
 }
 
 // ================= PROBLEM 32 =================
 // Move alternate nodes to a new list
 
-void splitAlternate(Node* head, Node** second) {
-    // TODO: Write your logic here
-    Node *p = NULL, *q = NULL, *r = NULL;
-    *second = NULL;
-    if(head == NULL || head->next == NULL) return;
+void splitAlternate(Node *head, Node **second) {
+  // TODO: Write your logic here
+  Node *p = NULL, *q = NULL, *r = NULL;
+  *second = NULL;
+  if (head == NULL || head->next == NULL)
+    return;
 
-    p = head;
-    while(p != NULL && p->next != NULL) {
-	    q = p->next;
-	    if(*second == NULL) *second = q;
-	    p->next = q->next;
-	    q->next = NULL;
-	    p = p->next;
-	    if(r != NULL)
-		    r->next = q;
-	    r = q;
-    }
-
+  p = head;
+  while (p != NULL && p->next != NULL) {
+    q = p->next;
+    if (*second == NULL)
+      *second = q;
+    p->next = q->next;
+    q->next = NULL;
+    p = p->next;
+    if (r != NULL)
+      r->next = q;
+    r = q;
+  }
 }
 
 int main() {
@@ -2541,131 +2551,131 @@ int main() {
       printList(empty);
       // Expected: NULL
   */
-/*
+  /*
+    Node *head = NULL;
+
+    // 1 -> 2 -> 3 -> 4 -> 5
+    for (int i = 1; i <= 5; i++)
+      head = insertEnd(head, i);
+
+    printList(head);
+
+    Node *res;
+
+    res = getNthFromEnd(head, 1);
+    printf("1st from end: %d\n", res ? res->data : -1); // 5
+
+    res = getNthFromEnd(head, 2);
+    printf("2nd from end: %d\n", res ? res->data : -1); // 4
+
+    res = getNthFromEnd(head, 5);
+    printf("5th from end: %d\n", res ? res->data : -1); // 1
+
+    res = getNthFromEnd(head, 6);
+    printf("Out of range: %p\n", res); // NULL
+  */
+  /*
+      Node* head = NULL;
+
+      // 1 -> 2 -> 3 -> 4 -> 5 -> 6
+      for(int i = 1; i <= 6; i++)
+          head = insertEnd(head, i);
+
+      // create cycle: 6 -> 3
+      Node* p = head;
+      Node* join = NULL;
+      int count = 1;
+
+      while(p->next != NULL) {
+          if(count == 3) join = p;
+          p = p->next;
+          count++;
+      }
+
+      p->next = join;  // cycle created
+
+      printf("Has cycle: %d\n", hasCycle(head));
+
+      printf("Cycle length: %d\n", cycleLength(head));
+
+      Node* start = findCycleStart(head);
+      if(start)
+          printf("Cycle starts at: %d\n", start->data);
+
+      printf("Total length: %d\n", listLength(head));
+
+      removeCycle(head);
+
+      printf("After removing cycle:\n");
+      printList(head);  // should print normally
+            */
+  /*
+      Node* head = NULL;
+
+      // 1 -> 2 -> 3 -> 4 -> 5
+      for(int i = 1; i <= 5; i++)
+          head = insertEnd(head, i);
+
+      Node* mid = findMiddle(head);
+      printf("Middle: %d\n", mid ? mid->data : -1); // 3
+
+
+      // Even case
+      Node* even = NULL;
+      for(int i = 1; i <= 6; i++)
+          even = insertEnd(even, i);
+
+      mid = findMiddle(even);
+      printf("Middle (even): %d\n", mid ? mid->data : -1);
+      // Decide: 3 or 4 (both acceptable, just be consistent)
+  */
+  /*
+      Node* head = NULL;
+
+      // 1 -> 2 -> 3 -> 4 -> 5
+      for(int i = 1; i <= 5; i++)
+          head = insertEnd(head, i);
+
+      Node *l1 = NULL, *l2 = NULL;
+
+      splitList(head, &l1, &l2);
+
+      printf("First half:\n");
+      printList(l1);  // 1 -> 2 -> 3
+
+      printf("Second half:\n");
+      printList(l2);  // 4 -> 5
+  */
+  /*
+      Node* head = NULL;
+
+      // 1 -> 2 -> 3 -> 4 -> 5 -> 6
+      for(int i = 1; i <= 6; i++)
+          head = insertEnd(head, i);
+
+      Node *l1 = NULL, *l2 = NULL;
+
+      splitAtValue(head, 3, &l1, &l2);
+
+      printList(l1);  // 1 -> 2 -> 3
+      printList(l2);  // 4 -> 5 -> 6
+  */
+
   Node *head = NULL;
 
-  // 1 -> 2 -> 3 -> 4 -> 5
-  for (int i = 1; i <= 5; i++)
+  // 1 -> 2 -> 3 -> 4 -> 5 -> 6
+  for (int i = 1; i <= 6; i++)
     head = insertEnd(head, i);
 
-  printList(head);
+  Node *second = NULL;
 
-  Node *res;
+  splitAlternate(head, &second);
 
-  res = getNthFromEnd(head, 1);
-  printf("1st from end: %d\n", res ? res->data : -1); // 5
+  printf("Odd list:\n");
+  printList(head); // 1 -> 3 -> 5
 
-  res = getNthFromEnd(head, 2);
-  printf("2nd from end: %d\n", res ? res->data : -1); // 4
-
-  res = getNthFromEnd(head, 5);
-  printf("5th from end: %d\n", res ? res->data : -1); // 1
-
-  res = getNthFromEnd(head, 6);
-  printf("Out of range: %p\n", res); // NULL
-*/
-/*
-    Node* head = NULL;
-
-    // 1 -> 2 -> 3 -> 4 -> 5 -> 6
-    for(int i = 1; i <= 6; i++)
-        head = insertEnd(head, i);
-
-    // create cycle: 6 -> 3
-    Node* p = head;
-    Node* join = NULL;
-    int count = 1;
-
-    while(p->next != NULL) {
-        if(count == 3) join = p;
-        p = p->next;
-        count++;
-    }
-
-    p->next = join;  // cycle created
-
-    printf("Has cycle: %d\n", hasCycle(head));
-    
-    printf("Cycle length: %d\n", cycleLength(head));
-
-    Node* start = findCycleStart(head);
-    if(start)
-        printf("Cycle starts at: %d\n", start->data);
-
-    printf("Total length: %d\n", listLength(head));
-
-    removeCycle(head);
-
-    printf("After removing cycle:\n");
-    printList(head);  // should print normally
-	  */
-/*
-    Node* head = NULL;
-
-    // 1 -> 2 -> 3 -> 4 -> 5
-    for(int i = 1; i <= 5; i++)
-        head = insertEnd(head, i);
-
-    Node* mid = findMiddle(head);
-    printf("Middle: %d\n", mid ? mid->data : -1); // 3
-
-
-    // Even case
-    Node* even = NULL;
-    for(int i = 1; i <= 6; i++)
-        even = insertEnd(even, i);
-
-    mid = findMiddle(even);
-    printf("Middle (even): %d\n", mid ? mid->data : -1);
-    // Decide: 3 or 4 (both acceptable, just be consistent)
-*/
-/*
-    Node* head = NULL;
-
-    // 1 -> 2 -> 3 -> 4 -> 5
-    for(int i = 1; i <= 5; i++)
-        head = insertEnd(head, i);
-
-    Node *l1 = NULL, *l2 = NULL;
-
-    splitList(head, &l1, &l2);
-
-    printf("First half:\n");
-    printList(l1);  // 1 -> 2 -> 3
-
-    printf("Second half:\n");
-    printList(l2);  // 4 -> 5
-*/
-/*
-    Node* head = NULL;
-
-    // 1 -> 2 -> 3 -> 4 -> 5 -> 6
-    for(int i = 1; i <= 6; i++)
-        head = insertEnd(head, i);
-
-    Node *l1 = NULL, *l2 = NULL;
-
-    splitAtValue(head, 3, &l1, &l2);
-
-    printList(l1);  // 1 -> 2 -> 3
-    printList(l2);  // 4 -> 5 -> 6
-*/
-
-    Node* head = NULL;
-
-    // 1 -> 2 -> 3 -> 4 -> 5 -> 6
-    for(int i = 1; i <= 6; i++)
-        head = insertEnd(head, i);
-
-    Node* second = NULL;
-
-    splitAlternate(head, &second);
-
-    printf("Odd list:\n");
-    printList(head);    // 1 -> 3 -> 5
-
-    printf("Even list:\n");
-    printList(second);  // 2 -> 4 -> 6
+  printf("Even list:\n");
+  printList(second); // 2 -> 4 -> 6
 
   return 0;
 }
