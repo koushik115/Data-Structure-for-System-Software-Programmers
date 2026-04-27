@@ -1198,34 +1198,34 @@ void splitAlternate(Node *head, Node **second) {
 // ================= PROBLEM 33 =================
 // Combine alternate nodes of l2 into l1 (in-place)
 
-void mergeAlternate(Node** l1, Node** l2) {
-    // TODO: Write your logic here
-    Node *p = NULL, *q = NULL, *last_node = NULL, *p_next = NULL, *q_next = NULL;
+void mergeAlternate(Node **l1, Node **l2) {
+  // TODO: Write your logic here
+  Node *p = NULL, *q = NULL, *last_node = NULL, *p_next = NULL, *q_next = NULL;
 
-    if(*l1 == NULL && *l2 == NULL) 
-	    return;
-    else if(*l1 == NULL && *l2 != NULL) {
-	    *l1 = *l2;
-	    *l2 = NULL;
-	    return;
-    }
-
-    p = *l1;
-    q = *l2;
-    while(p != NULL && q != NULL) {
-	p_next = p->next;
-	q_next = q->next;
-	p->next = q;
-	q->next = p_next;
-	last_node = q;
-	p = p_next;
-	q = q_next;
-    }
-
-    if(q != NULL)
-	    last_node->next = q;
-
+  if (*l1 == NULL && *l2 == NULL)
+    return;
+  else if (*l1 == NULL && *l2 != NULL) {
+    *l1 = *l2;
     *l2 = NULL;
+    return;
+  }
+
+  p = *l1;
+  q = *l2;
+  while (p != NULL && q != NULL) {
+    p_next = p->next;
+    q_next = q->next;
+    p->next = q;
+    q->next = p_next;
+    last_node = q;
+    p = p_next;
+    q = q_next;
+  }
+
+  if (q != NULL)
+    last_node->next = q;
+
+  *l2 = NULL;
 }
 
 int main() {
@@ -2693,74 +2693,74 @@ int main() {
       printList(l1);  // 1 -> 2 -> 3
       printList(l2);  // 4 -> 5 -> 6
   */
-/*
-  Node *head = NULL;
+  /*
+    Node *head = NULL;
 
-  // 1 -> 2 -> 3 -> 4 -> 5 -> 6
-  for (int i = 1; i <= 6; i++)
-    head = insertEnd(head, i);
+    // 1 -> 2 -> 3 -> 4 -> 5 -> 6
+    for (int i = 1; i <= 6; i++)
+      head = insertEnd(head, i);
 
-  Node *second = NULL;
+    Node *second = NULL;
 
-  splitAlternate(head, &second);
+    splitAlternate(head, &second);
 
-  printf("Odd list:\n");
-  printList(head); // 1 -> 3 -> 5
+    printf("Odd list:\n");
+    printList(head); // 1 -> 3 -> 5
 
-  printf("Even list:\n");
-  printList(second); // 2 -> 4 -> 6
-*/
+    printf("Even list:\n");
+    printList(second); // 2 -> 4 -> 6
+  */
 
   //   Node *l1 = NULL, *l2 = NULL;
-/*
-    // l1: 1 -> 2 -> 3 -> 4
-    l1 = insertEnd(l1, 1);
-    l1 = insertEnd(l1, 2);
-    l1 = insertEnd(l1, 3);
-    l1 = insertEnd(l1, 4);
+  /*
+      // l1: 1 -> 2 -> 3 -> 4
+      l1 = insertEnd(l1, 1);
+      l1 = insertEnd(l1, 2);
+      l1 = insertEnd(l1, 3);
+      l1 = insertEnd(l1, 4);
 
-    // l2: 5 -> 7 -> 8 -> 9
-    l2 = insertEnd(l2, 5);
-    l2 = insertEnd(l2, 7);
-    l2 = insertEnd(l2, 8);
-    l2 = insertEnd(l2, 9);
+      // l2: 5 -> 7 -> 8 -> 9
+      l2 = insertEnd(l2, 5);
+      l2 = insertEnd(l2, 7);
+      l2 = insertEnd(l2, 8);
+      l2 = insertEnd(l2, 9);
 
-    printf("Before merge:\n");
-    printf("L1: ");
-    printList(l1);
-    printf("L2: ");
-    printList(l2);
+      printf("Before merge:\n");
+      printf("L1: ");
+      printList(l1);
+      printf("L2: ");
+      printList(l2);
 
-    mergeAlternate(&l1, &l2);
+      mergeAlternate(&l1, &l2);
 
-    printf("\nAfter merge:\n");
-    printf("L1: ");
-    printList(l1);   // Expected: 1 -> 5 -> 2 -> 7 -> 3 -> 8 -> 4 -> 9
+      printf("\nAfter merge:\n");
+      printf("L1: ");
+      printList(l1);   // Expected: 1 -> 5 -> 2 -> 7 -> 3 -> 8 -> 4 -> 9
 
-    printf("L2: ");
-    printList(l2);   // Expected: NULL
-*/
+      printf("L2: ");
+      printList(l2);   // Expected: NULL
+  */
 
-    Node *l1 = NULL, *l2 = NULL;
+  Node *l1 = NULL, *l2 = NULL;
 
-    // l1: 1 -> 2
-    l1 = insertEnd(l1, 1);
-    l1 = insertEnd(l1, 2);
+  // l1: 1 -> 2
+  l1 = insertEnd(l1, 1);
+  l1 = insertEnd(l1, 2);
 
-    // l2: 10 -> 20 -> 30 -> 40
-    l2 = insertEnd(l2, 10);
-    l2 = insertEnd(l2, 20);
-    l2 = insertEnd(l2, 30);
-    l2 = insertEnd(l2, 40);
+  // l2: 10 -> 20 -> 30 -> 40
+  l2 = insertEnd(l2, 10);
+  l2 = insertEnd(l2, 20);
+  l2 = insertEnd(l2, 30);
+  l2 = insertEnd(l2, 40);
 
-    mergeAlternate(&l1, &l2);
+  mergeAlternate(&l1, &l2);
 
-    printf("L1: ");
-    printList(l1);  
-    // Expected: 1 -> 10 -> 2 -> 20 -> 30 -> 40
+  printf("L1: ");
+  printList(l1);
+  // Expected: 1 -> 10 -> 2 -> 20 -> 30 -> 40
 
-    printf("L2: ");
-    printList(l2);  
-    // Expected: NULL
+  printf("L2: ");
+  printList(l2);
+  // Expected: NULL
   return 0;
 }
