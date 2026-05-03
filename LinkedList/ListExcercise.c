@@ -1228,6 +1228,56 @@ void mergeAlternate(Node **l1, Node **l2) {
   *l2 = NULL;
 }
 
+// ================= PROBLEM 34 =================
+// Find intersection point of both the list
+Node* findMergePoint(Node* l1, Node* l2) {
+    // TODO: Write your logic here
+    Node *p = NULL, *q = NULL, *mid = NULL;
+    int p_count = 0, q_count = 0, step_count = 0;
+
+    if(l1 == NULL && l2 == NULL)
+	    return NULL;
+    
+    p = l1;
+    q = l2;
+
+    while(p != NULL) {
+	    p = p->next;
+	    p_count++;
+    }
+
+    while(q != NULL) {
+	    q = q->next;
+	    q_count++;
+    }
+
+    p = l1;
+    q = l2;
+    if (p_count > q_count) {
+	    step_count = p_count - q_count;
+	    while(p != NULL && step_count > 0) {
+		    p = p->next;
+		    step_count--;
+	    }
+    } else if(p_count < q_count) {
+	    step_count = q_count - p_count;
+	    while(q != NULL && step_count > 0) {
+		    q = q->next;
+		    step_count--;
+	    }
+    }
+
+    while(p != NULL && q != NULL) {
+	    if(p == q)
+		    return p;
+
+	    p = p->next;
+	    q = q->next;
+    }
+
+    return mid;
+}
+
 int main() {
   /*
       Node* head = NULL;
@@ -2740,7 +2790,7 @@ int main() {
       printf("L2: ");
       printList(l2);   // Expected: NULL
   */
-
+/*
   Node *l1 = NULL, *l2 = NULL;
 
   // l1: 1 -> 2
@@ -2761,6 +2811,116 @@ int main() {
 
   printf("L2: ");
   printList(l2);
-  // Expected: NULL
+*/
+
+    printf("===== Test Case 1: Basic Intersection =====\n");
+
+    Node* common = NULL;
+    common = insertEnd(common, 7);
+    common = insertEnd(common, 8);
+    common = insertEnd(common, 9);
+
+    Node* l1 = NULL;
+    l1 = insertEnd(l1, 1);
+    l1 = insertEnd(l1, 2);
+    l1 = insertEnd(l1, 3);
+
+    Node* temp = l1;
+    while(temp->next != NULL) temp = temp->next;
+    temp->next = common;
+
+    Node* l2 = NULL;
+    l2 = insertEnd(l2, 4);
+    l2 = insertEnd(l2, 5);
+
+    temp = l2;
+    while(temp->next != NULL) temp = temp->next;
+    temp->next = common;
+
+    printList(l1);
+    printList(l2);
+
+    Node* res = findMergePoint(l1, l2);
+    printf("Merge Point: %d\n\n", res ? res->data : -1);
+
+
+    printf("===== Test Case 2: No Intersection =====\n");
+
+    Node* a = NULL;
+    a = insertEnd(a, 1);
+    a = insertEnd(a, 2);
+    a = insertEnd(a, 3);
+
+    Node* b = NULL;
+    b = insertEnd(b, 4);
+    b = insertEnd(b, 5);
+    b = insertEnd(b, 6);
+
+    printList(a);
+    printList(b);
+
+    res = findMergePoint(a, b);
+    printf("Merge Point: %s\n\n", res ? "Exists" : "None");
+
+
+    printf("===== Test Case 3: Intersection at Head =====\n");
+
+    Node* c = NULL;
+    c = insertEnd(c, 10);
+    c = insertEnd(c, 20);
+    c = insertEnd(c, 30);
+
+    Node* d = c;
+
+    printList(c);
+    printList(d);
+
+    res = findMergePoint(c, d);
+    printf("Merge Point: %d\n\n", res ? res->data : -1);
+
+
+    printf("===== Test Case 4: One List Empty =====\n");
+
+    Node* e = NULL;
+    Node* f = NULL;
+    f = insertEnd(f, 1);
+    f = insertEnd(f, 2);
+
+    printList(e);
+    printList(f);
+
+    res = findMergePoint(e, f);
+    printf("Merge Point: %s\n\n", res ? "Exists" : "None");
+
+
+    printf("===== Test Case 5: Unequal Length Intersection =====\n");
+
+    Node* common2 = NULL;
+    common2 = insertEnd(common2, 100);
+    common2 = insertEnd(common2, 200);
+
+    Node* g = NULL;
+    g = insertEnd(g, 1);
+    g = insertEnd(g, 2);
+    g = insertEnd(g, 3);
+    g = insertEnd(g, 4);
+
+    temp = g;
+    while(temp->next != NULL) temp = temp->next;
+    temp->next = common2;
+
+    Node* h = NULL;
+    h = insertEnd(h, 9);
+    h = insertEnd(h, 8);
+
+    temp = h;
+    while(temp->next != NULL) temp = temp->next;
+    temp->next = common2;
+
+    printList(g);
+    printList(h);
+
+    res = findMergePoint(g, h);
+    printf("Merge Point: %d\n\n", res ? res->data : -1);
   return 0;
 }
