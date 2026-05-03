@@ -1278,6 +1278,29 @@ Node* findMergePoint(Node* l1, Node* l2) {
     return mid;
 }
 
+// ================= PROBLEM 35 =================
+// Form the reverse list of a given number
+DNode* createFromNumber(int num) {
+    // TODO: Write your logic here
+    DNode *head = NULL, *prev = NULL, *current;
+    
+    do {
+	    current = (DNode *)malloc(sizeof(DNode));
+	    if(head == NULL)
+		    head = current;
+
+	    if(prev != NULL)
+		    prev->next = current;
+	    current->prev = prev;
+	    current->data = num % 10;
+	    current->next = NULL;
+	    prev = current;
+	    num = num / 10;
+    } while (num > 0);
+
+    return head;
+}
+
 int main() {
   /*
       Node* head = NULL;
