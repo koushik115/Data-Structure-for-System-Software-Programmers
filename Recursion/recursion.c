@@ -30,8 +30,17 @@ void display2(int n) {
 	printf("%d ", n);
 }
 
-int main(void) {
+int rseries(int n) {
+	int sum;
+	if(n == 0)
+		return 0;
+	sum = n + rseries(n - 1);
+	printf("%d + ", n);
+	return sum;
+}
 
+int main(void) {
+/*
 	printf("%ld ", fact(3));
 	printf("\n");
 
@@ -43,6 +52,9 @@ int main(void) {
 
 	display2(5);
 	printf("\n");
-
+*/
+	printf("\b\b = %d\n", rseries(5));
 	return 0;
 }
+
+
