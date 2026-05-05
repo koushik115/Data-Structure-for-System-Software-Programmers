@@ -1,4 +1,10 @@
 #include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Node {
+	int data;
+	Node *next;
+} Node;
 
 long int fact(int n) {
 	if(n == 0)
@@ -138,7 +144,82 @@ void towerOfHanoi(int ndisk, char source, char temp, char dest) {
 	towerOfHanoi(ndisk - 1, temp, source, dest);
 }
 
+int length(Node *ptr) {
+	if(ptr == NULL)
+		return 0;
+
+	return 1 + length(pre->next);
+}
+
+int sum(Node *ptr) {
+	if(ptr == NULL)
+		return 0;
+
+	return ptr->data + sum(ptr->next);
+}
+
+void display(Node *ptr) {
+	if(ptr == NULL)
+		return;
+
+	printf("%d ", ptr->data);
+	display(ptr->next);
+}
+
+void Rdisplay(Node *ptr) {
+	if(ptr == NULL)
+		return;
+
+	Rdisplay(ptr->next);
+	printf(" %d", ptr->data);
+}
+
+int search(Node *ptr, int item) {
+	if(ptr == NULL)
+		return 0;
 	
+	if(ptr->data == item)
+		return 1;
+
+	return search(ptr->next, item);
+}
+
+Node *insertLast(Node *ptr, int item) {
+	Node *tmp = NULL;
+	if(ptr == NULL) {
+		tmp = (Node *)malloc(sizeof(Node));
+		tmp->data = item;
+		tmp->next = NULL;
+		return tmp;
+	}
+
+	ptr->next = insertLast(ptr->next, item);
+	return ptr;
+}
+
+Node *delLast(Node *ptr) {
+	if(ptr->next == NULL) {
+		free(ptr);
+		return NULL;
+	}
+
+	ptr->next = delLast(ptr->next);
+	return ptr;
+}
+
+Node *reverse(Node *ptr) {
+	Node *tmp;
+
+	if(ptr->next == NULL)
+		return ptr;
+
+	tmp = reverse(ptr->next);
+	tmp->next = ptr;
+	ptr->next = NULL;
+
+	return tmp;
+}
+
 int main(void) {
 /*
 	printf("%ld ", fact(3));
@@ -147,7 +228,7 @@ int main(void) {
 	printf("%d", summation(4));
 	printf("\n");
 
-                                                                                                	display1(5);
+	display1(5);
 	printf("\n");
 
 	display2(5);
