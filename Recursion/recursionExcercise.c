@@ -28,13 +28,24 @@ void print_in_words(int num)
 {
     // write your logic
     char *numArr[] = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
-    if(num == 0)
+    if(num == 0) 
 	    return;
 
     print_in_words(num / 10);
     printf("%s ", numArr[num % 10]);
 
 }
+
+int reverse_number(int num, int rev)
+{
+    // write your logic
+    if(num == 0)
+	    return rev;
+
+    rev = rev * 10 + (num % 10);
+    return reverse_number(num / 10, rev);
+}
+
 
 int main(void) {
 	/*
@@ -55,7 +66,7 @@ int main(void) {
     	printf("%d\n", is_strictly_ascending(arr3, 1, 0)); // 1
     	printf("%d\n", is_strictly_ascending(arr4, 4, 0)); // 0
 	*/
-
+	/*
     	printf("===== Test Case 1 =====\n");
     	print_in_words(123);   // One Two Three
 
@@ -68,6 +79,12 @@ int main(void) {
     	printf("\n===== Test Case 4 =====\n");
     	print_in_words(1002);  // One Zero Zero Two
 	printf("\n");
-
+	*/
+	
+ 	printf("%d\n", reverse_number(1234, 0));   // 4321
+    	printf("%d\n", reverse_number(405, 0));    // 504
+    	printf("%d\n", reverse_number(7, 0));      // 7
+    	printf("%d\n", reverse_number(1000, 0));   // 1
+	
 	return 0;
 }
