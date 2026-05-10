@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <limits.h>
 
 void reverseArray(int arr[], int i, int j) {
 	int temp;
@@ -46,6 +47,74 @@ int reverse_number(int num, int rev)
     return reverse_number(num / 10, rev);
 }
 
+int find_remainder(int a, int b)
+{
+    // write your logic
+    if(b == 0)
+	    return INT_MIN;
+
+    if(a < b)
+	    return a;
+
+
+    return find_remainder(a - b, b);
+}
+
+int find_quotient(int a, int b)
+{
+    // write your logic
+    if(b == 0)
+	    return INT_MIN;
+
+    if(a < b)
+	    return 0;
+
+    return 1 + find_quotient(a - b, b);
+}
+
+int power(int a, int n)
+{
+    // write your logic
+    if(n == 0)
+	    return 1;
+
+    if(n % 2 == 0)
+	return power(a * a, n / 2);
+    else
+	return a * power(a * a, n / 2);
+}
+
+int russian_multiply(int a, int b)
+{
+    // write your logic
+    if(a == 1)
+	    return b;
+
+    if(a % 2 == 0)
+	    return russian_multiply(a / 2, b * 2);
+    else
+	    return b + russian_multiply(a / 2, b * 2);
+
+}
+
+int log2_rec(int n)
+{
+    // write your logic
+    if(n < 2)
+	    return 0;
+
+    return 1 + log2_rec(n / 2);
+}
+
+
+int logb_rec(int n, int b)
+{
+    // write your logic
+    if(n < b)
+	    return 0;
+
+    return 1 + logb_rec(n / b, b);
+}
 
 int main(void) {
 	/*
@@ -80,11 +149,41 @@ int main(void) {
     	print_in_words(1002);  // One Zero Zero Two
 	printf("\n");
 	*/
-	
+	/*
  	printf("%d\n", reverse_number(1234, 0));   // 4321
     	printf("%d\n", reverse_number(405, 0));    // 504
     	printf("%d\n", reverse_number(7, 0));      // 7
     	printf("%d\n", reverse_number(1000, 0));   // 1
+	*/
+	/*
+	printf("%d\n", find_remainder(17, 5));  // 2
+    	printf("%d\n", find_remainder(10, 3));  // 1
+    	printf("%d\n", find_remainder(25, 5));  // 0
+    	printf("%d\n", find_remainder(7, 8));   // 7
+	*/
+/*
+ 	printf("%d\n", find_quotient(17, 5));  // 3
+    	printf("%d\n", find_quotient(10, 3));  // 3
+    	printf("%d\n", find_quotient(25, 5));  // 5
+   	printf("%d\n", find_quotient(7, 8));   // 0
+*/
+/*
+ 	printf("%d\n", power(2, 8));   // 256
+    	printf("%d\n", power(2, 5));   // 32
+    	printf("%d\n", power(3, 4));   // 81
+    	printf("%d\n", power(5, 0));   // 1	
+*/
+/*
+   	printf("%d\n", russian_multiply(13, 12)); // 156
+    	printf("%d\n", russian_multiply(7, 5));   // 35
+    	printf("%d\n", russian_multiply(10, 0));  // 0
+    	printf("%d\n", russian_multiply(1, 9));   // 9
+*/
+   	printf("%d\n", log2_rec(8));    // 3
+    	printf("%d\n", log2_rec(10));   // 3
+
+    	printf("%d\n", logb_rec(27, 3)); // 3
+    	printf("%d\n", logb_rec(20, 2)); // 4
 	
 	return 0;
 }
