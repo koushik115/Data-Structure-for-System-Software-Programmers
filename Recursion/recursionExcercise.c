@@ -125,6 +125,16 @@ int binomial(int n, int k)
     return binomial(n - 1, k - 1) + binomial(n - 1, k);
 }
 
+int ackermann(int m, int n)
+{
+    // write your logic
+    if(m == 0)
+	    return n + 1;
+    else if(m > 0 && n == 0)
+	    return ackermann(m - 1, 1);
+
+    return ackermann(m - 1, ackermann(m, n - 1));
+}
 
 int main(void) {
 	/*
@@ -196,10 +206,16 @@ int main(void) {
     	printf("%d\n", logb_rec(27, 3)); // 3
     	printf("%d\n", logb_rec(20, 2)); // 4
 */
+/*
 	printf("%d\n", binomial(5, 2));  // 10
     	printf("%d\n", binomial(6, 3));  // 20
     	printf("%d\n", binomial(4, 0));  // 1
     	printf("%d\n", binomial(4, 4));  // 1
-				     
+*/
+    	printf("%d\n", ackermann(0, 5)); // 6
+    	printf("%d\n", ackermann(1, 2)); // 4
+    	printf("%d\n", ackermann(2, 2)); // 7
+    	printf("%d\n", ackermann(3, 2)); // 29
+	
 	return 0;
 }
