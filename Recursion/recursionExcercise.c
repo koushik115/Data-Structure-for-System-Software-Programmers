@@ -116,6 +116,16 @@ int logb_rec(int n, int b)
     return 1 + logb_rec(n / b, b);
 }
 
+int binomial(int n, int k)
+{
+    // write your logic
+    if(k == 0 || k == n)
+	    return 1;
+
+    return binomial(n - 1, k - 1) + binomial(n - 1, k);
+}
+
+
 int main(void) {
 	/*
 	int arr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
@@ -179,11 +189,17 @@ int main(void) {
     	printf("%d\n", russian_multiply(10, 0));  // 0
     	printf("%d\n", russian_multiply(1, 9));   // 9
 */
+/*
    	printf("%d\n", log2_rec(8));    // 3
     	printf("%d\n", log2_rec(10));   // 3
 
     	printf("%d\n", logb_rec(27, 3)); // 3
     	printf("%d\n", logb_rec(20, 2)); // 4
-	
+*/
+	printf("%d\n", binomial(5, 2));  // 10
+    	printf("%d\n", binomial(6, 3));  // 20
+    	printf("%d\n", binomial(4, 0));  // 1
+    	printf("%d\n", binomial(4, 4));  // 1
+				     
 	return 0;
 }
