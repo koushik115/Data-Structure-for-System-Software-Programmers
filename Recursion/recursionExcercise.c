@@ -136,6 +136,20 @@ int ackermann(int m, int n)
     return ackermann(m - 1, ackermann(m, n - 1));
 }
 
+int count_vowels(char *str)
+{
+    // write your logic
+    if(*str == '\0')
+	    return 0;
+
+    if(*str == 'a' || *str == 'e' || *str == 'i' || *str == 'o' ||*str == 'u' ||  *str == 'A' || *str == 'E' || *str == 'I' ||*str == 'O' ||  *str == 'U')
+	    return 1 + count_vowels(str + 1);
+    else
+	    return count_vowels(str + 1);
+
+}
+
+
 int main(void) {
 	/*
 	int arr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
@@ -212,10 +226,16 @@ int main(void) {
     	printf("%d\n", binomial(4, 0));  // 1
     	printf("%d\n", binomial(4, 4));  // 1
 */
+/*	
     	printf("%d\n", ackermann(0, 5)); // 6
     	printf("%d\n", ackermann(1, 2)); // 4
     	printf("%d\n", ackermann(2, 2)); // 7
     	printf("%d\n", ackermann(3, 2)); // 29
+*/
+	printf("%d\n", count_vowels("hello"));      // 2
+    	printf("%d\n", count_vowels("AEIOU"));      // 5
+    	printf("%d\n", count_vowels("xyz"));        // 0
+    	printf("%d\n", count_vowels("recursion"));  // 4
 	
 	return 0;
 }
