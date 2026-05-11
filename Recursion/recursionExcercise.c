@@ -149,6 +149,18 @@ int count_vowels(char *str)
 
 }
 
+void replace_char(char *str, char old_char, char new_char)
+{
+    // write your logic
+    if(*str == '\0')
+	    return;
+
+    if(*str == old_char)
+	    *str = new_char;
+
+    replace_char(str + 1, old_char, new_char);
+}
+
 
 int main(void) {
 	/*
@@ -232,10 +244,24 @@ int main(void) {
     	printf("%d\n", ackermann(2, 2)); // 7
     	printf("%d\n", ackermann(3, 2)); // 29
 */
+/*	
 	printf("%d\n", count_vowels("hello"));      // 2
     	printf("%d\n", count_vowels("AEIOU"));      // 5
     	printf("%d\n", count_vowels("xyz"));        // 0
     	printf("%d\n", count_vowels("recursion"));  // 4
+*/
+
+    	char str1[] = "hello";
+    	char str2[] = "recursion";
+    	char str3[] = "aaaa";
+
+    	replace_char(str1, 'l', 'x');
+    	replace_char(str2, 'r', 'z');
+    	replace_char(str3, 'a', 'b');
+
+    	printf("%s\n", str1);  // hexxo
+    	printf("%s\n", str2);  // zecuzsion
+    	printf("%s\n", str3);  // bbbb
 	
 	return 0;
 }
