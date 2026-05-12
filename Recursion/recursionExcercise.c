@@ -174,6 +174,30 @@ void reverse_string(char *str, int start, int end)
     reverse_string(str, start + 1, end - 1);
 }
 
+int starts_with(char *str, char *pattern)
+{
+    // helper: check if str starts with pattern
+    if(*pattern == '\0')
+	    return 1;
+    else if(*str != *pattern)
+	    return 0;
+
+    return starts_with(str + 1, pattern + 1);
+}
+
+
+int find_index(char *str, char *pattern, int index)
+{
+    // write your logic
+    if(*str == '\0')
+	    return -1;
+    else if(starts_with(str, pattern))
+	    return index;
+
+    return find_index(str + 1, pattern, index + 1);
+}
+
+
 int main(void) {
 	/*
 	int arr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
@@ -275,6 +299,7 @@ int main(void) {
     	printf("%s\n", str2);  // zecuzsion
     	printf("%s\n", str3);  // bbbb
 */
+/*	
     	char str1[] = "hello";
     	char str2[] = "recursion";
     	char str3[] = "a";
@@ -286,5 +311,11 @@ int main(void) {
     	printf("%s\n", str1);  // olleh
     	printf("%s\n", str2);  // noisrucer
     	printf("%s\n", str3);  // a
+*/
+    	printf("%d\n", find_index("hello", "ll", 0));      // 2
+    	printf("%d\n", find_index("recursion", "cur", 0)); // 2
+    	printf("%d\n", find_index("abcdef", "gh", 0));     // -1
+    	printf("%d\n", find_index("aaaaa", "aa", 0));      // 0
+	
 	return 0;
 }
