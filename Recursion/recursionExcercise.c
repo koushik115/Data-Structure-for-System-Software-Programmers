@@ -197,6 +197,24 @@ int find_index(char *str, char *pattern, int index)
     return find_index(str + 1, pattern, index + 1);
 }
 
+int last_index(char *str, char target, int index)
+{
+    // write your logic
+    if(*str == '\0')
+	    return -1;
+	
+    int res = last_index(str + 1, target, index + 1);
+
+    if(res != -1)
+	    return res;
+
+    if(*str == target)
+	    return index;
+    
+    return -1;
+    
+}
+
 
 int main(void) {
 	/*
@@ -312,10 +330,17 @@ int main(void) {
     	printf("%s\n", str2);  // noisrucer
     	printf("%s\n", str3);  // a
 */
+/*	
     	printf("%d\n", find_index("hello", "ll", 0));      // 2
     	printf("%d\n", find_index("recursion", "cur", 0)); // 2
     	printf("%d\n", find_index("abcdef", "gh", 0));     // -1
     	printf("%d\n", find_index("aaaaa", "aa", 0));      // 0
-	
+*/
+
+    	printf("%d\n", last_index("hello", 'l', 0));     // 3
+    	printf("%d\n", last_index("recursion", 'r', 0)); // 6
+    	printf("%d\n", last_index("abcdef", 'x', 0));    // -1
+    	printf("%d\n", last_index("aaaa", 'a', 0));      // 3
+
 	return 0;
 }
