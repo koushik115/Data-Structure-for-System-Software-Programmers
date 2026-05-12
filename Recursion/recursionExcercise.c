@@ -215,6 +215,16 @@ int last_index(char *str, char target, int index)
     
 }
 
+int is_palindrome(char *str, int start, int end)
+{
+    // write your logic
+    if(start >= end)
+	    return 1;
+    else if(str[start] != str[end])
+	    return 0;
+
+    return is_palindrome(str, start + 1, end - 1);
+}
 
 int main(void) {
 	/*
@@ -336,11 +346,17 @@ int main(void) {
     	printf("%d\n", find_index("abcdef", "gh", 0));     // -1
     	printf("%d\n", find_index("aaaaa", "aa", 0));      // 0
 */
-
+/*
     	printf("%d\n", last_index("hello", 'l', 0));     // 3
     	printf("%d\n", last_index("recursion", 'r', 0)); // 6
     	printf("%d\n", last_index("abcdef", 'x', 0));    // -1
     	printf("%d\n", last_index("aaaa", 'a', 0));      // 3
+*/
+	printf("%d\n", is_palindrome("madam", 0, 4));   // 1
+	printf("%d\n", is_palindrome("hello", 0, 4));   // 0
+    	printf("%d\n", is_palindrome("a", 0, 0));       // 1
+    	printf("%d\n", is_palindrome("abba", 0, 3));    // 1
+
 
 	return 0;
 }
