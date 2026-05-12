@@ -161,6 +161,18 @@ void replace_char(char *str, char old_char, char new_char)
     replace_char(str + 1, old_char, new_char);
 }
 
+void reverse_string(char *str, int start, int end)
+{
+    // write your logic
+    if(start >= end)
+	    return;
+
+    char tmp = str[start];
+    str[start] = str[end];
+    str[end] = tmp;
+
+    reverse_string(str, start + 1, end - 1);
+}
 
 int main(void) {
 	/*
@@ -250,7 +262,7 @@ int main(void) {
     	printf("%d\n", count_vowels("xyz"));        // 0
     	printf("%d\n", count_vowels("recursion"));  // 4
 */
-
+/*
     	char str1[] = "hello";
     	char str2[] = "recursion";
     	char str3[] = "aaaa";
@@ -262,6 +274,17 @@ int main(void) {
     	printf("%s\n", str1);  // hexxo
     	printf("%s\n", str2);  // zecuzsion
     	printf("%s\n", str3);  // bbbb
-	
+*/
+    	char str1[] = "hello";
+    	char str2[] = "recursion";
+    	char str3[] = "a";
+
+    	reverse_string(str1, 0, 4);
+   	reverse_string(str2, 0, 8);
+    	reverse_string(str3, 0, 0);
+
+    	printf("%s\n", str1);  // olleh
+    	printf("%s\n", str2);  // noisrucer
+    	printf("%s\n", str3);  // a
 	return 0;
 }
